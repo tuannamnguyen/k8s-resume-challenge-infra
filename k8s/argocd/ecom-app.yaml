@@ -6,7 +6,6 @@ metadata:
 spec:
   project: default
   source:
-    chart: ecom-app-chart
     repoURL: https://github.com/tuannamnguyen/k8s-resume-challenge-infra.git
     targetRevision: HEAD
     path: ecom-app-chart
