@@ -9,6 +9,9 @@ spec:
     repoURL: https://github.com/tuannamnguyen/k8s-resume-challenge-infra.git
     targetRevision: HEAD
     path: ecom-app-chart
+    helm:
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: ecom-app
