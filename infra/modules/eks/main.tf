@@ -5,8 +5,7 @@ module "eks" {
   kubernetes_version = var.k8s_cluster_version
 
   compute_config = {
-    enabled    = true
-    node_pools = ["general-purpose"]
+    enabled = false
   }
 
   endpoint_public_access  = true
