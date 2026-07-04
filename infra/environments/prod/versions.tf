@@ -4,7 +4,12 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "6.28.0"
+      version = ">= 6.52.0, < 7.0.0"
+    }
+
+    porkbun = {
+      source  = "kyswtn/porkbun"
+      version = "0.1.3"
     }
   }
 }
