@@ -1,6 +1,5 @@
 # argocd
-kubectl create namespace argocd
-kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+helm install -f ./k8s/helm-values/argocd-values.yaml argocd argo-cd/argo-cd -n argocd --create-namespace
 
 # metrics server
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
