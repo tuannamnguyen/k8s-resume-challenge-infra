@@ -14,3 +14,11 @@ variable "project_name" {
   type    = string
   default = "k8s-resume-challenge"
 }
+
+variable "porkbun_api_key" {
+  type = string
+}
+
+variable "porkbun_secret_key" {
+  type = string
+}
