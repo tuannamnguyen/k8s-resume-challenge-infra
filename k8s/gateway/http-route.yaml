@@ -9,7 +9,7 @@ spec:
       namespace: gateway
       sectionName: https
   hostnames:
-    - "argocd.local.example.com"
+    - "argocd.tunebridge.online"
   rules:
     - backendRefs:
         - name: argocd-server
