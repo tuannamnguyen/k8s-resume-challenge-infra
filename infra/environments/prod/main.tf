@@ -33,6 +33,9 @@ module "acm" {
 
 }
 
+module "iam" {
+  source = "../../modules/iam"
+}
 module "porkbun" {
   source           = "../../modules/porkbun"
   root_domain_name = "tunebridge.online"
