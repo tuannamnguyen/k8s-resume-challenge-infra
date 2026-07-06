@@ -1,6 +1,6 @@
 # https://www.gateway-api-controller.eks.aws.dev/v1.0.7/guides/deploy/#setup
 
-resource "aws_iam_policy" "gateway-api-controller-policy" {
+resource "aws_iam_policy" "gateway_api_controller_policy" {
   name        = "gateway-api-controller-policy"
   description = "Policy to provide AWS Gateway API permission"
   policy = jsonencode(
@@ -30,13 +30,13 @@ resource "aws_iam_policy" "gateway-api-controller-policy" {
             "tag:TagResources",
             "tag:UntagResources",
             "acm:ListCertificates"
-          ]
+          ],
           Resource : "*"
         },
         {
-          Effect   = "Allow"
-          Action   = "iam:CreateServiceLinkedRole"
-          Resource = "arn:aws:iam::*:role/aws-service-role/vpc-lattice.amazonaws.com/AWSServiceRoleForVpcLattice"
+          Effect   = "Allow",
+          Action   = "iam:CreateServiceLinkedRole",
+          Resource = "arn:aws:iam::*:role/aws-service-role/vpc-lattice.amazonaws.com/AWSServiceRoleForVpcLattice",
           Condition = {
             StringLike = {
               "iam:AWSServiceName" = "vpc-lattice.amazonaws.com"
@@ -44,9 +44,9 @@ resource "aws_iam_policy" "gateway-api-controller-policy" {
           }
         },
         {
-          Effect   = "Allow"
-          Action   = "iam:CreateServiceLinkedRole"
-          Resource = "arn:aws:iam::*:role/aws-service-role/delivery.logs.amazonaws.com/AWSServiceRoleForLogDelivery"
+          Effect   = "Allow",
+          Action   = "iam:CreateServiceLinkedRole",
+          Resource = "arn:aws:iam::*:role/aws-service-role/delivery.logs.amazonaws.com/AWSServiceRoleForLogDelivery",
           Condition = {
             StringLike = {
               "iam:AWSServiceName" = "delivery.logs.amazonaws.com"
@@ -60,10 +60,10 @@ resource "aws_iam_policy" "gateway-api-controller-policy" {
 }
 
 
-resource "aws_iam_policy" "name" {
+resource "aws_iam_role" "vpc_lattice_controller_iam_role" {
   name        = "VPCLatticeControllerIAMRole"
   description = "IAM Role for AWS Gateway API Controller for VPC Lattice"
-  policy = jsonencode(
+  assume_role_policy = jsonencode(
     {
       Version = "2012-10-17"
       Statement = [
