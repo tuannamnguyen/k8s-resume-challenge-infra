@@ -1,12 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-ecom-app-service
+  name: {{ include "ecom-app.fullname" . }}
+  labels:
+    {{- include "ecom-app.labels" . | nindent 4 }}
 spec:
   selector:
-    app: my-ecom-app
+    {{- include "ecom-app.selectorLabels" . | nindent 4 }}
   ports:
-    - port: 9000
-      targetPort: 8000
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
       protocol: TCP
-  type: NodePort
+  type: {{ .Values.service.type }}

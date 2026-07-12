@@ -1,40 +1,42 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ecom-deployment
+  name: {{ include "ecom-app.fullname" . }}
+  labels:
+    {{- include "ecom-app.labels" . | nindent 4 }}
 spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
-      app: my-ecom-app
+      {{- include "ecom-app.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: my-ecom-app
+        {{- include "ecom-app.selectorLabels" . | nindent 8 }}
     spec:
       volumes:
         - name: secret-volume
           secret:
-            secretName: ecom-app-secret
+            secretName: {{ include "ecom-app.secretName" . }}
       containers:
-        - name: ecom-container
-          image: tuannamnguyen290602/ecom-web:v7
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: ["dotenvx", "run", "-fk", "/etc/secret-volume/.env.keys", "-f", "/etc/secret-volume/.env.prod", "--", "php", "-S", "0.0.0.0:8000", "-t", "/var/www/html"]
           env:
             - name: HERO_HEADING
               valueFrom:
                 configMapKeyRef:
                   key: hero_heading
-                  name: my-ecom-app-config
+                  name: {{ include "ecom-app.fullname" . }}
           resources:
-            requests:
-              memory: "128Mi"
-              cpu: "500m"
-            limits:
-              memory: "128Mi"
+            {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: secret-volume
               readOnly: true
-              mountPath: "/etc/secret-volume"
+              mountPath: /etc/secret-volume
           livenessProbe:
             initialDelaySeconds: 10
             failureThreshold: 3
@@ -42,6 +44,6 @@ spec:
             timeoutSeconds: 3
             httpGet:
               path: /healthz
-              port: 8000
+              port: {{ .Values.service.targetPort }}
           ports:
-            - containerPort: 8000
+            - containerPort: {{ .Values.service.targetPort }}

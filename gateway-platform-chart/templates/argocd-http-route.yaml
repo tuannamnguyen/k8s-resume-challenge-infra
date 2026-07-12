@@ -1,0 +1,24 @@
+{{- if .Values.argocdRoute.enabled }}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: argocd-http-route
+  namespace: {{ .Values.argocdRoute.namespace }}
+  labels:
+    {{- include "gateway-platform.labels" . | nindent 4 }}
+spec:
+  parentRefs:
+    - name: {{ .Values.argocdRoute.gatewayName }}
+      namespace: {{ .Values.argocdRoute.gatewayNamespace }}
+      sectionName: {{ .Values.argocdRoute.sectionName }}
+  hostnames:
+    - {{ required "argocdRoute.hostname is required when argocdRoute.enabled is true" .Values.argocdRoute.hostname | quote }}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: {{ .Values.argocdRoute.serviceName }}
+          port: {{ .Values.argocdRoute.servicePort }}
+{{- end }}
