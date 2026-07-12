@@ -4,11 +4,11 @@ gatewayClass:
   controllerName: ""
 
 gateway:
-  create: false
+  create: true
   name: cluster-gateway
   namespace: gateway
   className: ""
-  hostname: ""
+  hostname: "tunebridge.online"
   tlsSecretName: ""
 
 # The Gateway controller's own chart should normally create its ServiceAccount.
@@ -19,9 +19,9 @@ serviceAccount:
   annotations: {}
 
 argocdRoute:
-  enabled: false
+  enabled: true
   namespace: argocd
-  hostname: ""
+  hostname: "tunebridge.online"
   gatewayName: cluster-gateway
   gatewayNamespace: gateway
   sectionName: https

@@ -40,4 +40,4 @@ route:
   gatewayName: cluster-gateway
   gatewayNamespace: gateway
   sectionName: https
-  hostname: ""
+  hostname: "tunebridge.online"
