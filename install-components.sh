@@ -1,11 +1,10 @@
-# argocd
-helm install -f ./k8s/helm-values/argocd-values.yaml argocd argo-cd/argo-cd -n argocd --create-namespace
-helm install my-gateway-api oci://ghcr.io/nicklasfrahm/charts/gateway-api --version 0.2.0 -n gateway --create-namespace
+# 1. configure the kubeconfig file for the EKS cluster
+export EKS_CLUSTER_NAME=$(terraform -chdir=./infra/modules/prod output -raw cluster_name)
+aws eks update-kubeconfig --profile admin-access --name $EKS_CLUSTER_NAME
 
-# metrics server
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-kubectl patch deployment metrics-server -n kube-system --type='json' \
-  -p='[{"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--kubelet-insecure-tls"}]'
+# 2. install argocd
+helm repo add argo https://argoproj.github.io/argo-helm
+helm install argocd argo/argo-cd -n argocd --create-namespace
 
-# kubectl rollout status deployment metrics-server -n kube-system
-# kubectl top pods -A
+# 3. install Gateway controller
+kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.6.0/standard-install.yaml

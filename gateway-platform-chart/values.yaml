@@ -8,20 +8,15 @@ gateway:
   name: cluster-gateway
   namespace: gateway
   className: ""
-  hostname: "tunebridge.online"
+  hostname: "*.tunebridge.online"
   tlsSecretName: ""
 
-# The Gateway controller's own chart should normally create its ServiceAccount.
-serviceAccount:
-  create: false
-  name: gateway-api-controller
-  namespace: aws-application-networking-system
-  annotations: {}
+
 
 argocdRoute:
   enabled: true
   namespace: argocd
-  hostname: "tunebridge.online"
+  hostname: "argocd.tunebridge.online"
   gatewayName: cluster-gateway
   gatewayNamespace: gateway
   sectionName: https

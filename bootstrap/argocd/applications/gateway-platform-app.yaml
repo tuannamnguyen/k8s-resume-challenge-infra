@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gateway-platform-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/tuannamnguyen/k8s-resume-challenge-infra.git
+    targetRevision: HEAD
+    path: gateway-platform-chart
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gateway
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
