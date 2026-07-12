@@ -82,3 +82,8 @@ resource "aws_iam_role" "vpc_lattice_controller_iam_role" {
     }
   )
 }
+
+resource "aws_iam_role_policy_attachment" "gateway_api_controller_policy_attachment" {
+  role       = aws_iam_role.vpc_lattice_controller_iam_role.name
+  policy_arn = aws_iam_policy.gateway_api_controller_policy.arn
+}
