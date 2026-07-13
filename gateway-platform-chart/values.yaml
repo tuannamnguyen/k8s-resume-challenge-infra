@@ -1,7 +1,7 @@
 gatewayClass:
   create: false
   name: ""
-  controllerName: ""
+  controllerName: gateway.k8s.aws/alb
 
 gateway:
   create: true

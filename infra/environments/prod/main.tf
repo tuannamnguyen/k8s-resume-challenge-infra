@@ -34,7 +34,8 @@ module "acm" {
 }
 
 module "iam" {
-  source = "../../modules/iam"
+  source       = "../../modules/iam"
+  cluster_name = module.eks.cluster_name
 }
 module "porkbun" {
   source           = "../../modules/porkbun"
