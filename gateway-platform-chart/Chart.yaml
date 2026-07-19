@@ -1,0 +1,6 @@
+apiVersion: v2
+name: gateway-platform
+description: Optional shared Gateway API resources for the cluster
+type: application
+version: 0.1.0
+appVersion: "1.0"

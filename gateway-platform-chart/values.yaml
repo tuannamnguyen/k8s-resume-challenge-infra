@@ -1,0 +1,24 @@
+gatewayClass:
+  create: false
+  name: aws-alb-gateway-class
+  controllerName: gateway.k8s.aws/alb
+
+gateway:
+  create: true
+  name: cluster-gateway
+  namespace: gateway
+  className: ""
+  hostname: "*.tunebridge.online"
+  tlsSecretName: ""
+
+
+
+argocdRoute:
+  enabled: true
+  namespace: argocd
+  hostname: "argocd.tunebridge.online"
+  gatewayName: cluster-gateway
+  gatewayNamespace: gateway
+  sectionName: https
+  serviceName: argocd-server
+  servicePort: 80

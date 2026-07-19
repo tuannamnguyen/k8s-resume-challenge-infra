@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ecom-app.fullname" . }}
+  labels:
+    {{- include "ecom-app.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "ecom-app.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "ecom-app.selectorLabels" . | nindent 8 }}
+    spec:
+      volumes:
+        - name: secret-volume
+          secret:
+            secretName: {{ include "ecom-app.secretName" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: ["dotenvx", "run", "-fk", "/etc/secret-volume/.env.keys", "-f", "/etc/secret-volume/.env.prod", "--", "php", "-S", "0.0.0.0:8000", "-t", "/var/www/html"]
+          env:
+            - name: HERO_HEADING
+              valueFrom:
+                configMapKeyRef:
+                  key: hero_heading
+                  name: {{ include "ecom-app.fullname" . }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: secret-volume
+              readOnly: true
+              mountPath: /etc/secret-volume
+          livenessProbe:
+            initialDelaySeconds: 10
+            failureThreshold: 3
+            periodSeconds: 3
+            timeoutSeconds: 3
+            httpGet:
+              path: /healthz
+              port: {{ .Values.service.targetPort }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}

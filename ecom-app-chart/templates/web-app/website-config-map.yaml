@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ecom-app.fullname" . }}
+  labels:
+    {{- include "ecom-app.labels" . | nindent 4 }}
+data:
+  hero_heading: {{ .Values.config.heroHeading | quote }}
