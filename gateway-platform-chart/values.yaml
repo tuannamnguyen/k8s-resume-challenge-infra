@@ -1,6 +1,6 @@
 gatewayClass:
   create: false
-  name: ""
+  name: aws-alb-gateway-class
   controllerName: gateway.k8s.aws/alb
 
 gateway:
