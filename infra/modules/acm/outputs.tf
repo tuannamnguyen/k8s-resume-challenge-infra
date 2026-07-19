@@ -3,3 +3,9 @@ output "domain_validation_option" {
   value       = aws_acm_certificate.playlist_manager_ssl_cert.domain_validation_options
   description = "ACM domains to prove controls of domain"
 }
+
+
+output "acm_cert_arn" {
+  value       = aws_acm_certificate.playlist_manager_ssl_cert.arn
+  description = "ACM certificate ARN"
+}

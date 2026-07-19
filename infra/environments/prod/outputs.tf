@@ -17,3 +17,9 @@ output "vpc_id" {
   description = "VPC ID used by this environment."
   value       = module.vpc.vpc_id
 }
+
+
+output "acm_cert_arn" {
+  value       = module.acm.acm_cert_arn
+  description = "ACM certificate ARN"
+}

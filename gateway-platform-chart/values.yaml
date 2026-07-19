@@ -7,18 +7,17 @@ gateway:
   create: true
   name: cluster-gateway
   namespace: gateway
-  className: ""
   hostname: "*.tunebridge.online"
   tlsSecretName: ""
 
-
+lbConfiguration:
+  name: test-gw-lbconfig-1
+  defaultCertificate: "" # patch later with ACM cert ARN from terraform output
 
 argocdRoute:
   enabled: true
   namespace: argocd
   hostname: "argocd.tunebridge.online"
-  gatewayName: cluster-gateway
-  gatewayNamespace: gateway
   sectionName: https
   serviceName: argocd-server
   servicePort: 80

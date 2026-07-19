@@ -1,0 +1,11 @@
+{{- if .Values.gateway.create }}
+apiVersion: gateway.k8s.aws/v1beta1
+kind: LoadBalancerConfiguration
+metadata:
+  name: {{ .Values.lbConfiguration.name }}
+  namespace: {{ .Values.gateway.namespace }}
+spec:
+  listenerConfigurations:
+    - protocolPort: HTTPS:443
+      defaultCertificate: {{ .Values.lbConfiguration.defaultCertificate }}
+{{- end }}

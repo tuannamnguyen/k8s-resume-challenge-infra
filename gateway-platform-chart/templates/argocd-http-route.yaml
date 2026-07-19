@@ -8,8 +8,8 @@ metadata:
     {{- include "gateway-platform.labels" . | nindent 4 }}
 spec:
   parentRefs:
-    - name: {{ .Values.argocdRoute.gatewayName }}
-      namespace: {{ .Values.argocdRoute.gatewayNamespace }}
+    - name: {{ .Values.gateway.name }}
+      namespace: {{ .Values.gateway.namespace }}
       sectionName: {{ .Values.argocdRoute.sectionName }}
   hostnames:
     - {{ required "argocdRoute.hostname is required when argocdRoute.enabled is true" .Values.argocdRoute.hostname | quote }}
