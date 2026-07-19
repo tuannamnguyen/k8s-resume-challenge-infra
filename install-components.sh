@@ -1,5 +1,5 @@
 # 1. configure the kubeconfig file for the EKS cluster
-export EKS_CLUSTER_NAME=$(terraform -chdir=./infra/modules/prod output -raw cluster_name)
+export EKS_CLUSTER_NAME=$(terraform -chdir=./infra/environments/prod output -raw cluster_name)
 aws eks update-kubeconfig --profile admin-access --name $EKS_CLUSTER_NAME
 
 # 2. install argocd: https://artifacthub.io/packages/helm/argo/argo-cd
@@ -18,3 +18,5 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
 --set clusterName=$EKS_CLUSTER_NAME \
 -n kube-system \
 --set serviceAccount.name=aws-load-balancer-controller
+
+# 5. apply helm chart for gateway resources:
