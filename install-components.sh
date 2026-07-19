@@ -18,6 +18,9 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   --set clusterName=k8s-resume-challenge-prod \
   -n kube-system \
   --set serviceAccount.name=aws-load-balancer-controller \
+  # https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.7/deploy/installation/#using-the-amazon-ec2-instance-metadata-server-version-2-imdsv2
+  --set vpcId=$(terraform -chdir=./infra/environments/prod output -raw vpc_id) \
+  --set region=$(terraform -chdir=./infra/environments/prod output -raw aws_region) \
   --skip-crds # apply if you have applied the CRDs in step 3.1
 
 # 5. apply helm chart for gateway resources:
