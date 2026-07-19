@@ -34,4 +34,4 @@ helm template gateway-platform ./gateway-platform-chart -f ./gateway-platform-ch
 kubectl apply -f ./bootstrap/argocd/applications/gateway-platform-app.yaml
 
 # patch the argocd route to use the ACM cert arn:
-kubectl patch application gateway-platform-app -n argocd --type=merge -p "{\"spec\":{\"source\":{\"helm\":{\"valuesObject\":{\"lbConfiguration\":{\"defaultCertificate\":\"$(terraform -chdir=./infra/environments/prod output -raw vpc_id)\"}}}}}}"
+kubectl patch application gateway-platform-app -n argocd --type=merge -p "{\"spec\":{\"source\":{\"helm\":{\"valuesObject\":{\"lbConfiguration\":{\"defaultCertificate\":\"$(terraform -chdir=./infra/environments/prod output -raw acm_cert_arn)\"}}}}}}"
