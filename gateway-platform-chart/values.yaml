@@ -4,8 +4,6 @@ gatewayClass:
   controllerName: gateway.k8s.aws/alb
 
 gateway:
-  annotations:
-    alb.ingress.kubernetes.io/scheme: "ip"
   create: true
   name: cluster-gateway
   namespace: gateway
@@ -23,3 +21,16 @@ argocdRoute:
   sectionName: https
   serviceName: argocd-server
   servicePort: 443
+
+
+targetGroupConfiguration:
+  enabled: true
+  name: argocd-server
+  # A TargetGroupConfiguration must be in the same namespace as its referenced Service.
+  namespace: argocd
+  targetReference:
+    name: argocd-server
+    kind: Service
+  defaultConfiguration:
+    targetGroupName: argocd-server
+    targetType: ip

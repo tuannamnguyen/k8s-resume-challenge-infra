@@ -1,0 +1,20 @@
+{{- if .Values.targetGroupConfiguration.enabled }}
+apiVersion: gateway.k8s.aws/v1beta1
+kind: TargetGroupConfiguration
+metadata:
+  name: {{ required "targetGroupConfiguration.name is required when targetGroupConfiguration.enabled is true" .Values.targetGroupConfiguration.name }}
+  namespace: {{ required "targetGroupConfiguration.namespace is required when targetGroupConfiguration.enabled is true" .Values.targetGroupConfiguration.namespace }}
+  labels:
+    {{- include "gateway-platform.labels" . | nindent 4 }}
+spec:
+  targetReference:
+    name: {{ required "targetGroupConfiguration.targetReference.name is required when targetGroupConfiguration.enabled is true" .Values.targetGroupConfiguration.targetReference.name }}
+    {{- with .Values.targetGroupConfiguration.targetReference.group }}
+    group: {{ . | quote }}
+    {{- end }}
+    {{- with .Values.targetGroupConfiguration.targetReference.kind }}
+    kind: {{ . | quote }}
+    {{- end }}
+  defaultConfiguration:
+    {{- toYaml (required "targetGroupConfiguration.defaultConfiguration is required when targetGroupConfiguration.enabled is true" .Values.targetGroupConfiguration.defaultConfiguration) | nindent 4 }}
+{{- end }}
