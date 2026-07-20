@@ -6,6 +6,8 @@ metadata:
   namespace: {{ .Values.gateway.namespace }}
   labels:
     {{- include "gateway-platform.labels" . | nindent 4 }}
+  annotations:
+    {{- toYaml .Values.gateway.annotations | nindent 4 }}
 spec:
   gatewayClassName: {{ required "gatewayClass.name is required when gateway.create is true" .Values.gatewayClass.name }}
   listeners:

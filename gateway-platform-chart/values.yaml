@@ -4,6 +4,8 @@ gatewayClass:
   controllerName: gateway.k8s.aws/alb
 
 gateway:
+  annotations:
+    alb.ingress.kubernetes.io/scheme: "ip"
   create: true
   name: cluster-gateway
   namespace: gateway
