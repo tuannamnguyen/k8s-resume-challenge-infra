@@ -13,6 +13,7 @@ gateway:
 lbConfiguration:
   name: test-gw-lbconfig-1
   defaultCertificate: "" # patch later with ACM cert ARN from terraform output
+  scheme: internet-facing
 
 argocdRoute:
   enabled: true

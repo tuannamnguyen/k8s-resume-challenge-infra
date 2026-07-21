@@ -8,4 +8,5 @@ spec:
   listenerConfigurations:
     - protocolPort: HTTPS:443
       defaultCertificate: {{ .Values.lbConfiguration.defaultCertificate }}
+  scheme: {{ .Values.lbConfiguration.scheme }}
 {{- end }}
