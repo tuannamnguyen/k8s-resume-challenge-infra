@@ -21,7 +21,7 @@ argocdRoute:
   hostname: "argocd.tunebridge.online"
   sectionName: https
   serviceName: argocd-server
-  servicePort: 443
+  servicePort: 80
 
 
 targetGroupConfiguration:
