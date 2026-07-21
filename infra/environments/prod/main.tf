@@ -24,6 +24,9 @@ module "route_53" {
   source                        = "../../modules/route_53"
   acm_domain_validation_options = module.acm.domain_validation_option
   root_domain_name              = "tunebridge.online"
+  alb_zone_id                   = var.alb_zone_id
+  alb_dns_name                  = var.alb_dns_name
+  create_route53_record_for_alb = var.create_route53_record_for_alb
 }
 
 module "acm" {

@@ -19,3 +19,17 @@ resource "aws_route53_record" "playlist_manager_cert_dns" {
   type            = each.value.type
   zone_id         = aws_route53_zone.playlist_manager_zone.zone_id
 }
+
+resource "aws_route53_record" "playlist_manager_domain" {
+  count = var.create_route53_record_for_alb ? 1 : 0
+
+  zone_id = aws_route53_zone.playlist_manager_zone.zone_id
+  name    = "*.${var.root_domain_name}"
+  type    = "A"
+
+  alias {
+    name                   = var.alb_dns_name
+    zone_id                = var.alb_zone_id
+    evaluate_target_health = true
+  }
+}

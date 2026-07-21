@@ -22,3 +22,16 @@ variable "porkbun_api_key" {
 variable "porkbun_secret_key" {
   type = string
 }
+
+variable "alb_dns_name" {
+  type = string
+}
+
+variable "alb_zone_id" {
+  type = string
+}
+
+variable "create_route53_record_for_alb" {
+  type        = bool
+  description = "Whether to create a Route53 record for the ALB"
+}
