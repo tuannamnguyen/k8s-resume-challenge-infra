@@ -16,4 +16,9 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+  infrastructure:
+    parametersRef:
+      group: gateway.k8s.aws
+      kind: LoadBalancerConfiguration
+      name: {{ required "lbConfiguration.name is required when gateway.create is true" .Values.lbConfiguration.name }}
 {{- end }}

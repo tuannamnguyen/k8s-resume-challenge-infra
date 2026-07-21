@@ -11,7 +11,7 @@ gateway:
   tlsSecretName: ""
 
 lbConfiguration:
-  name: test-gw-lbconfig-1
+  name: cluster-gw-lbconfig
   defaultCertificate: "" # patch later with ACM cert ARN from terraform output
   scheme: internet-facing
 
