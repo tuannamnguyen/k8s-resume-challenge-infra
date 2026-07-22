@@ -4,10 +4,9 @@ aws eks update-kubeconfig --profile admin-access --name $EKS_CLUSTER_NAME
 
 # 2. install argocd: https://artifacthub.io/packages/helm/argo/argo-cd
 helm repo add argo https://argoproj.github.io/argo-helm
-helm install argocd argo/argo-cd -n argocd \
   # tls already terminated at the ALB, so we can use insecure mode for argocd server: https://www.reddit.com/r/kubernetes/comments/1mg0ykq/argocd_deployment_via_helm_chart_issue/
-  --set configs.params.server\.insecure=true \
-  --create-namespace
+helm install argocd argo/argo-cd -n argocd \
+  --create-namespace -f ./helm-values/argocd-values.yaml
 
 # 3. install Gateway API Controller and CRDs: https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/guide/gateway/gateway/#prerequisites
 kubectl apply --server-side=true -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.0/standard-install.yaml
