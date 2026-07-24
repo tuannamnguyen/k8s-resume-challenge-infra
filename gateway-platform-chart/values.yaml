@@ -32,13 +32,25 @@ ecomAppRoute:
   servicePort: 9000
 
 targetGroupConfiguration:
-  enabled: true
-  name: argocd-server
-  # A TargetGroupConfiguration must be in the same namespace as its referenced Service.
-  namespace: argocd
-  targetReference:
+  argocd:
+    enabled: true
     name: argocd-server
-    kind: Service
-  defaultConfiguration:
-    targetGroupName: argocd-server
-    targetType: ip
+    # A TargetGroupConfiguration must be in the same namespace as its referenced Service.
+    namespace: argocd
+    targetReference:
+      name: argocd-server
+      kind: Service
+    defaultConfiguration:
+      targetGroupName: argocd-server
+      targetType: ip
+  ecom-app:
+    enabled: true
+    name: ecom-app
+    # A TargetGroupConfiguration must be in the same namespace as its referenced Service.
+    namespace: ecom-app
+    targetReference:
+      name: ecom-app
+      kind: Service
+    defaultConfiguration:
+      targetGroupName: ecom-app
+      targetType: ip

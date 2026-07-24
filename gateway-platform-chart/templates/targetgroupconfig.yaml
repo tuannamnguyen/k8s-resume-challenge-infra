@@ -1,20 +1,23 @@
-{{- if .Values.targetGroupConfiguration.enabled }}
+{{- range $configName, $config := .Values.targetGroupConfiguration }}
+{{- if $config.enabled }}
+---
 apiVersion: gateway.k8s.aws/v1beta1
 kind: TargetGroupConfiguration
 metadata:
-  name: {{ required "targetGroupConfiguration.name is required when targetGroupConfiguration.enabled is true" .Values.targetGroupConfiguration.name }}
-  namespace: {{ required "targetGroupConfiguration.namespace is required when targetGroupConfiguration.enabled is true" .Values.targetGroupConfiguration.namespace }}
+  name: {{ required (printf "targetGroupConfiguration.%s.name is required when enabled is true" $configName) $config.name }}
+  namespace: {{ required (printf "targetGroupConfiguration.%s.namespace is required when enabled is true" $configName) $config.namespace }}
   labels:
-    {{- include "gateway-platform.labels" . | nindent 4 }}
+    {{- include "gateway-platform.labels" $ | nindent 4 }}
 spec:
   targetReference:
-    name: {{ required "targetGroupConfiguration.targetReference.name is required when targetGroupConfiguration.enabled is true" .Values.targetGroupConfiguration.targetReference.name }}
-    {{- with .Values.targetGroupConfiguration.targetReference.group }}
+    name: {{ required (printf "targetGroupConfiguration.%s.targetReference.name is required when enabled is true" $configName) $config.targetReference.name }}
+    {{- with $config.targetReference.group }}
     group: {{ . | quote }}
     {{- end }}
-    {{- with .Values.targetGroupConfiguration.targetReference.kind }}
+    {{- with $config.targetReference.kind }}
     kind: {{ . | quote }}
     {{- end }}
   defaultConfiguration:
-    {{- toYaml (required "targetGroupConfiguration.defaultConfiguration is required when targetGroupConfiguration.enabled is true" .Values.targetGroupConfiguration.defaultConfiguration) | nindent 4 }}
+    {{- toYaml (required (printf "targetGroupConfiguration.%s.defaultConfiguration is required when enabled is true" $configName) $config.defaultConfiguration) | nindent 4 }}
+{{- end }}
 {{- end }}
