@@ -23,6 +23,13 @@ argocdRoute:
   serviceName: argocd-server
   servicePort: 80
 
+ecomAppRoute:
+  enabled: true
+  namespace: ecom-app
+  sectionName: https
+  hostname: "app.tunebridge.online"
+  serviceName: ecom-app
+  servicePort: 80
 
 targetGroupConfiguration:
   enabled: true

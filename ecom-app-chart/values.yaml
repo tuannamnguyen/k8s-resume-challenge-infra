@@ -34,10 +34,3 @@ secret:
   existingSecret: ecom-app-secret
   envProd: ""
   dotenvxPrivateKey: ""
-
-route:
-  enabled: false
-  gatewayName: cluster-gateway
-  gatewayNamespace: gateway
-  sectionName: https
-  hostname: "tunebridge.online"

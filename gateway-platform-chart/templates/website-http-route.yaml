@@ -1,0 +1,25 @@
+{{- if .Values.ecomAppRoute.enabled }}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: ecom-app-http-route
+  namespace: {{ .Values.ecomAppRoute.namespace }}
+  labels:
+    {{- include "gateway-platform.labels" . | nindent 4 }}
+
+spec:
+  parentRefs:
+    - name: {{ .Values.gateway.name }}
+      namespace: {{ .Values.gateway.namespace }}
+      sectionName: {{ .Values.ecomAppRoute.sectionName }}
+  hostnames:
+    - {{ required "ecomAppRoute.hostname is required when ecomAppRoute.enabled is true" .Values.ecomAppRoute.hostname | quote }}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: {{ .Values.ecomAppRoute.serviceName }}
+          port: {{ .Values.ecomAppRoute.servicePort }}
+{{- end }}
