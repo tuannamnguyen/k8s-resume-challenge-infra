@@ -39,3 +39,9 @@ kubectl apply -f ./bootstrap/argocd/applications/gateway-platform-app.yaml
 
 # patch the argocd route to use the ACM cert arn:
 kubectl patch application gateway-platform-app -n argocd --type=merge -p "{\"spec\":{\"source\":{\"helm\":{\"valuesObject\":{\"lbConfiguration\":{\"defaultCertificate\":\"$(terraform -chdir=./infra/environments/prod output -raw acm_cert_arn)\"}}}}}}"
+
+# dry run the app chart
+helm template ecom-app ./ecom-app-chart -f ./ecom-app-chart/values.yaml
+
+# apply the ecom-app app to argocd:
+kubectl apply -f ./bootstrap/argocd/applications/ecom-app.yaml
