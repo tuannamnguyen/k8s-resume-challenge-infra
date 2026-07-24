@@ -30,7 +30,7 @@ resources:
 
 # Keep secret material out of Git and Helm release metadata by default.
 secret:
-  create: false
+  create: true
   existingSecret: ecom-app-secret
   envProd: ""
   dotenvxPrivateKey: ""
