@@ -29,7 +29,7 @@ ecomAppRoute:
   sectionName: https
   hostname: "app.tunebridge.online"
   serviceName: ecom-app
-  servicePort: 80
+  servicePort: 9000
 
 targetGroupConfiguration:
   enabled: true
