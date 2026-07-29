@@ -40,6 +40,15 @@ module "iam" {
   source       = "../../modules/iam"
   cluster_name = module.eks.cluster_name
 }
+
+module "secrets_manager" {
+  source = "../../modules/secret_manager"
+  project_name = var.project_name
+  account_id   = module.aws_context.account_id
+  env_keys     = var.env_keys
+  env_prod     = var.env_prod
+}
+
 module "porkbun" {
   source           = "../../modules/porkbun"
   root_domain_name = "tunebridge.online"

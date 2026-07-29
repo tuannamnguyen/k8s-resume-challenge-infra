@@ -35,3 +35,11 @@ variable "create_route53_record_for_alb" {
   type        = bool
   description = "Whether to create a Route53 record for the ALB"
 }
+
+variable "env_keys" {
+  type = string
+}
+
+variable "env_prod" {
+  type = string
+}
