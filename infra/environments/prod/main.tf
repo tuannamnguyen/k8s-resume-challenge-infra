@@ -42,7 +42,7 @@ module "iam" {
 }
 
 module "secrets_manager" {
-  source = "../../modules/secret_manager"
+  source       = "../../modules/secret_manager"
   project_name = var.project_name
   account_id   = module.aws_context.account_id
   env_keys     = var.env_keys
