@@ -18,21 +18,19 @@ module "aws_lb_controller_pod_identity" {
   }
 }
 
-module "pod_secret_manager_policy" {
-  source = "terraform-aws-modules/iam/aws//modules/iam-policy"
-  name   = "pod-access-secret-manager"
+module "external_secrets_pod_identity" {
+  source = "terraform-aws-modules/eks-pod-identity/aws"
 
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "secretsmanager:GetSecretValue",
-          "secretsmanager:DescribeSecret",
-        ]
-        Resource = var.secret_arn
-      },
-    ]
-  })
+  name                                  = "external-secrets"
+  attach_external_secrets_policy        = true
+  external_secrets_secrets_manager_arns = [var.secret_arn]
+
+  associations = {
+    this = {
+      cluster_name    = var.cluster_name
+      namespace       = "ecom-app"
+      service_account = "account"
+    }
+  }
+
 }
