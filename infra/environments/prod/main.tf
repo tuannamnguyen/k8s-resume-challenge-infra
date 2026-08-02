@@ -39,6 +39,7 @@ module "acm" {
 module "iam" {
   source       = "../../modules/iam"
   cluster_name = module.eks.cluster_name
+  secret_arn   = module.secrets_manager.secret_arn
 }
 
 module "secrets_manager" {

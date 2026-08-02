@@ -17,3 +17,22 @@ module "aws_lb_controller_pod_identity" {
     Environment = "dev"
   }
 }
+
+module "pod_secret_manager_policy" {
+  source = "terraform-aws-modules/iam/aws//modules/iam-policy"
+  name   = "pod-access-secret-manager"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "secretsmanager:GetSecretValue",
+          "secretsmanager:DescribeSecret",
+        ]
+        Resource = var.secret_arn
+      },
+    ]
+  })
+}
