@@ -45,3 +45,7 @@ helm template ecom-app ./ecom-app-chart -f ./ecom-app-chart/values.yaml
 
 # apply the ecom-app app to argocd:
 kubectl apply -f ./bootstrap/argocd/applications/ecom-app.yaml
+
+# 6. install the AWS Secrets Manager CSI driver:
+helm repo add aws-secrets-manager https://aws.github.io/secrets-store-csi-driver-provider-aws
+helm install -n kube-system secrets-provider-aws aws-secrets-manager/secrets-store-csi-driver-provider-aws

@@ -22,6 +22,12 @@ spec:
         - name: secret-volume
           secret:
             secretName: {{ include "ecom-app.secretName" . }}
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: {{ include "ecom-app.secretProviderClassName" . }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
