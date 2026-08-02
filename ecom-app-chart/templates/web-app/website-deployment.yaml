@@ -16,6 +16,8 @@ spec:
       labels:
         {{- include "ecom-app.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      automountServiceAccountToken: {{ .Values.serviceAccount.automountServiceAccountToken }}
       volumes:
         - name: secret-volume
           secret:

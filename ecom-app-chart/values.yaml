@@ -34,3 +34,7 @@ secret:
   existingSecret: ecom-app-secret
   envProd: "abcd"
   dotenvxPrivateKey: "abvc"
+
+serviceAccount:
+  name: web-app-service-account
+  automountServiceAccountToken: false
