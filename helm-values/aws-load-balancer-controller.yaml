@@ -1,2 +1,10 @@
+clusterName: k8s-resume-challenge-prod
+replicaCount: 3
+region: ap-southeast-1
+# Set this to the VPC ID output by the production Terraform stack before
+# bootstrapping the application. The controller cannot discover the VPC when
+# running on Fargate or with IMDS access disabled.
+vpcId: ""
+
 serviceAccount:
   name: aws-load-balancer-controller
