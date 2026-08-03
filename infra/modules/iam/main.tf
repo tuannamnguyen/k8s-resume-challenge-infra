@@ -28,8 +28,8 @@ module "external_secrets_pod_identity" {
   associations = {
     this = {
       cluster_name    = var.cluster_name
-      namespace       = "ecom-app"
-      service_account = "account"
+      namespace       = "external-secrets"
+      service_account = "external-secrets"
     }
   }
 
