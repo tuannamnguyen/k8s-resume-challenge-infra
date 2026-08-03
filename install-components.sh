@@ -15,17 +15,9 @@ kubectl apply --server-side=true -f https://github.com/kubernetes-sigs/gateway-a
 # kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/refs/heads/main/config/crd/gateway/gateway-crds.yaml
 
 # 4. install AWS LBC: https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/deploy/installation/#add-controller-to-cluster
-helm repo add eks https://aws.github.io/eks-charts
-
-# https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.7/deploy/installation/#using-the-amazon-ec2-instance-metadata-server-version-2-imdsv2
-helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
-  --set clusterName=k8s-resume-challenge-prod \
-  -n kube-system \
-  --set serviceAccount.name=aws-load-balancer-controller \
-  --set replicaCount=3 \
-  --set vpcId=$(terraform -chdir=./infra/environments/prod output -raw vpc_id) \
-  --set region=$(terraform -chdir=./infra/environments/prod output -raw aws_region) \
-  # --skip-crds # apply if you have applied the CRDs in step 3.1
+kubectl apply -f ./bootstrap/argocd/applications/aws-load-balancer-controller-app.yaml
+kubectl patch application aws-load-balancer-controller -n argocd --type=json \
+  --patch="[{\"op\":\"add\",\"path\":\"/spec/sources/0/helm/valuesObject\",\"value\":{\"vpcId\":\"$(terraform -chdir=./infra/environments/prod output -raw vpc_id)\"}}]"
 
 # 5. apply helm chart for gateway resources:
 

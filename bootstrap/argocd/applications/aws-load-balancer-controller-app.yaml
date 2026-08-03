@@ -12,6 +12,9 @@ spec:
       helm:
         valueFiles:
           - $values/helm-values/aws-load-balancer-controller.yaml
+        valuesObject:
+          vpcId: ""
+
     - repoURL: https://github.com/tuannamnguyen/k8s-resume-challenge-infra.git
       targetRevision: HEAD
       ref: values
