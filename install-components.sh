@@ -39,10 +39,4 @@ helm template ecom-app ./ecom-app-chart -f ./ecom-app-chart/values.yaml
 kubectl apply -f ./bootstrap/argocd/applications/ecom-app.yaml
 
 # install external secret operator
-helm repo add external-secrets https://charts.external-secrets.io
-
-helm install external-secrets \
-   external-secrets/external-secrets \
-    -n external-secrets \
-    --create-namespace \
-  # --set installCRDs=false
+kubectl apply -f ./bootstrap/argocd/applications/external-secret-operator.yaml
