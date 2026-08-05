@@ -42,3 +42,5 @@ kubectl apply -f ./bootstrap/argocd/applications/ecom-app.yaml
 kubectl apply -f ./bootstrap/argocd/applications/external-secrets-operator.yaml
 
 helm template external-secret-config ./external-secret-config -f ./external-secret-config/values.yaml
+
+kubectl apply -f ./bootstrap/argocd/applications/external-secrets.yaml
