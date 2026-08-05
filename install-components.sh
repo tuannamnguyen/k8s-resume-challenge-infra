@@ -39,4 +39,6 @@ helm template ecom-app ./ecom-app-chart -f ./ecom-app-chart/values.yaml
 kubectl apply -f ./bootstrap/argocd/applications/ecom-app.yaml
 
 # install external secret operator
-kubectl apply -f ./bootstrap/argocd/applications/external-secret-operator.yaml
+kubectl apply -f ./bootstrap/argocd/applications/external-secrets-operator.yaml
+
+helm template external-secret-config ./external-secret-config -f ./external-secret-config/values.yaml
