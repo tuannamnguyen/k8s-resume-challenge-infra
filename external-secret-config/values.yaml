@@ -1,6 +1,0 @@
-secretStore:
-  enabled: true
-
-  provider:
-    aws:
-      role: arn:aws:iam::533267191229:role/external-secrets-3fce892dcf3b77730666bb6e85
