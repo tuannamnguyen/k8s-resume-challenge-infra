@@ -23,7 +23,7 @@ terraform {
     organization = "nam_test_org"
 
     workspaces {
-      name = "homelab-workpsace"
+      name = "homelab-workspace"
     }
   }
 }
