@@ -8,6 +8,7 @@ module "vpc" {
   environment  = "prod"
   project_name = var.project_name
   context      = module.label.context
+  region       = module.aws_context.region
 }
 
 

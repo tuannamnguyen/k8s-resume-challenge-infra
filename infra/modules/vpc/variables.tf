@@ -10,3 +10,8 @@ variable "context" {
   description = "Single object for setting entire context at once"
   type        = any
 }
+
+variable "region" {
+  description = "Current AWS region name."
+  type        = string
+}
