@@ -18,19 +18,19 @@ module "aws_lb_controller_pod_identity" {
   }
 }
 
-module "external_secrets_pod_identity" {
-  source = "terraform-aws-modules/eks-pod-identity/aws"
+# module "external_secrets_pod_identity" {
+#   source = "terraform-aws-modules/eks-pod-identity/aws"
 
-  name                                  = "external-secrets"
-  attach_external_secrets_policy        = true
-  external_secrets_secrets_manager_arns = [var.secret_arn]
+#   name                                  = "external-secrets"
+#   attach_external_secrets_policy        = true
+#   external_secrets_secrets_manager_arns = [var.secret_arn]
 
-  associations = {
-    this = {
-      cluster_name    = var.cluster_name
-      namespace       = "external-secrets"
-      service_account = "external-secrets"
-    }
-  }
+#   associations = {
+#     this = {
+#       cluster_name    = var.cluster_name
+#       namespace       = "external-secrets"
+#       service_account = "external-secrets"
+#     }
+#   }
 
-}
+# }

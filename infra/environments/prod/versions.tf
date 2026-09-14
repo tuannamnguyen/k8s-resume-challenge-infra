@@ -12,4 +12,13 @@ terraform {
       version = "0.1.3"
     }
   }
+
+  cloud {
+
+    organization = "nam_test_org"
+
+    workspaces {
+      name = "homelab-workpsace"
+    }
+  }
 }

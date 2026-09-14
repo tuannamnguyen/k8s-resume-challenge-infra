@@ -1,7 +1,7 @@
 module "eks" {
   source = "terraform-aws-modules/eks/aws"
 
-  name               = "${var.project_name}-${var.environment}"
+  name               = module.label.id
   kubernetes_version = var.k8s_cluster_version
 
   # find a way to include AmazonEKSWorkerNodePolicy and AmazonEC2ContainerRegistryPullOnly

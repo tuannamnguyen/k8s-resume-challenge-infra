@@ -1,6 +1,6 @@
 provider "aws" {
-  region  = var.aws_region
-  profile = var.aws_profile
+  region = "ap-southeast-1"
+  shared_config_files = [var.tfc_aws_dynamic_credentials.default.shared_config_file]
 }
 
 provider "porkbun" {

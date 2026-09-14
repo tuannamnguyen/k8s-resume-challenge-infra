@@ -14,9 +14,9 @@ module "eks" {
   source = "../../modules/eks"
 
   environment        = "prod"
-  project_name       = var.project_name
   vpc_id             = module.vpc.vpc_id
   private_subnet_ids = module.vpc.private_subnet_ids
+  context            = module.label.context
 }
 
 
@@ -39,19 +39,33 @@ module "acm" {
 module "iam" {
   source       = "../../modules/iam"
   cluster_name = module.eks.cluster_name
-  secret_arn   = module.secrets_manager.secret_arn
 }
 
-module "secrets_manager" {
-  source       = "../../modules/secret_manager"
-  project_name = var.project_name
-  account_id   = module.aws_context.account_id
-  env_keys     = var.env_keys
-  env_prod     = var.env_prod
-}
+# module "secrets_manager" {
+#   source       = "../../modules/secret_manager"
+#   project_name = var.project_name
+#   account_id   = module.aws_context.account_id
+#   env_keys     = var.env_keys
+#   env_prod     = var.env_prod
+# }
 
 module "porkbun" {
   source           = "../../modules/porkbun"
   root_domain_name = "tunebridge.online"
   nameservers      = module.route_53.nameservers
+}
+
+
+module "label" {
+  source  = "cloudposse/label/null"
+  version = "0.25.0"
+
+  # insert the 12 required variables here
+
+  namespace   = "homelab"
+  environment = "apse1"
+  stage       = "dev"
+  tags = {
+    Terraform = true
+  }
 }

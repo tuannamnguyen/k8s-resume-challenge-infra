@@ -3,5 +3,6 @@ variable "cluster_name" {
 }
 
 variable "secret_arn" {
-  type = string
+  type    = string
+  default = ""
 }
