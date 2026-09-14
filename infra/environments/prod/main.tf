@@ -7,7 +7,7 @@ module "vpc" {
 
   environment  = "prod"
   project_name = var.project_name
-  context      = module.label.id
+  context      = module.label.context
 }
 
 
