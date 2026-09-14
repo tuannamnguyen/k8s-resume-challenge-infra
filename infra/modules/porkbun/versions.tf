@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     porkbun = {
-      source  = "kyswtn/porkbun"
-      version = "0.1.3"
+      source  = "jianyuan/porkbun"
+      version = "0.3.2"
     }
   }
 }

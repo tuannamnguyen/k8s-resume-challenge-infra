@@ -13,9 +13,7 @@ module "aws_lb_controller_pod_identity" {
     }
   }
 
-  tags = {
-    Environment = "dev"
-  }
+  tags = module.label.tags
 }
 
 # module "external_secrets_pod_identity" {

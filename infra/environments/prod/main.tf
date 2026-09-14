@@ -7,6 +7,7 @@ module "vpc" {
 
   environment  = "prod"
   project_name = var.project_name
+  context      = module.label.id
 }
 
 
@@ -39,6 +40,7 @@ module "acm" {
 module "iam" {
   source       = "../../modules/iam"
   cluster_name = module.eks.cluster_name
+  context      = module.label.context
 }
 
 # module "secrets_manager" {
