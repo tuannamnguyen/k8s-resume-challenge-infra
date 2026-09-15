@@ -52,6 +52,8 @@ resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
 }
 
 resource "aws_vpc_endpoint_subnet_association" "sn_ec2" {
+  for_each = toset(module.vpc.private_subnets)
+
   vpc_endpoint_id = aws_vpc_endpoint.ec2.id
-  subnet_id       = module.vpc.vpc_id
+  subnet_id       = each.value
 }
