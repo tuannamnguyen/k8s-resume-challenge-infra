@@ -6,3 +6,10 @@ provider "porkbun" {
   api_key    = var.porkbun_api_key
   secret_key = var.porkbun_secret_key
 }
+
+provider "helm" {
+  kubernetes = {
+    host = module.eks.cluster_endpoint
+
+  }
+}

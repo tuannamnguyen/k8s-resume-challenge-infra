@@ -28,3 +28,8 @@ variable "context" {
   description = "Single object for setting entire context at once"
   type        = any
 }
+variable "create" {
+  description = "Controls if resources should be created"
+  type        = bool
+  default     = false
+}
