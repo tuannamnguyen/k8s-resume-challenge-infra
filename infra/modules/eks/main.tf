@@ -32,6 +32,16 @@ module "eks" {
   vpc_id     = var.vpc_id
   subnet_ids = var.private_subnet_ids
 
+  access_entries = {
+    admin = {
+      principal_arn = "arn:aws:iam::533267191229:role/aws-reserved/sso.amazonaws.com/ap-southeast-1/AWSReservedSSO_AdministratorAccess_041ed0ad69adcb5a"
+      policy_associations = {
+        admin = {
+          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+        }
+      }
+    }
+  }
 
   eks_managed_node_groups = {
     example = {
