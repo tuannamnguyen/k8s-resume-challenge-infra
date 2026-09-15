@@ -22,7 +22,7 @@ module "vpc" {
 }
 
 resource "aws_vpc_endpoint" "ec2" {
-  tags = module.label.tags
+  tags = merge(module.label.tags, { Name = "${module.label.id}-ec2-endpoint" })
 
 
   vpc_id             = module.vpc.vpc_id
@@ -34,7 +34,8 @@ resource "aws_vpc_endpoint" "ec2" {
 }
 
 resource "aws_security_group" "endpoint_sg" {
-  tags = module.label.tags
+  tags = merge(module.label.tags, { Name = "${module.label.id}-endpoint-sg" })
+
 
   name_prefix = module.label.id
   description = "SG for VPC endpoints"
