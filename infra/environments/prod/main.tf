@@ -19,6 +19,8 @@ module "eks" {
   vpc_id             = module.vpc.vpc_id
   private_subnet_ids = module.vpc.private_subnet_ids
   context            = module.label.context
+
+  depends_on = [module.vpc]
 }
 
 

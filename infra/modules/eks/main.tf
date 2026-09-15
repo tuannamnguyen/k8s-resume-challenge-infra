@@ -4,6 +4,9 @@ module "eks" {
   name               = module.label.id
   kubernetes_version = var.k8s_cluster_version
 
+  tags = module.label.tags
+
+
   # find a way to include AmazonEKSWorkerNodePolicy and AmazonEC2ContainerRegistryPullOnly
   # https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html
   compute_config = {

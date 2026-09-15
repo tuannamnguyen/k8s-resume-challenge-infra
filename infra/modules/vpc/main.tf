@@ -1,7 +1,7 @@
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name = "${var.project_name}-${var.environment}-vpc"
+  name = module.label.id
   cidr = "10.0.0.0/16"
 
   azs             = ["ap-southeast-1a", "ap-southeast-1b", "ap-southeast-1c"]
@@ -18,13 +18,13 @@ module "vpc" {
     "kubernetes.io/role/elb" = "1"
   }
 
-  tags = {
-    Terraform   = "true"
-    Environment = var.environment
-  }
+  tags = module.label.tags
 }
 
 resource "aws_vpc_endpoint" "ec2" {
+  tags = module.label.tags
+
+
   vpc_id             = module.vpc.vpc_id
   service_name       = "com.amazonaws.${var.region}.ec2"
   security_group_ids = [aws_security_group.endpoint_sg.id]
@@ -34,15 +34,24 @@ resource "aws_vpc_endpoint" "ec2" {
 }
 
 resource "aws_security_group" "endpoint_sg" {
+  tags = module.label.tags
+
   name_prefix = module.label.id
   description = "SG for VPC endpoints"
   vpc_id      = module.vpc.vpc_id
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
+  tags = module.label.tags
+
   security_group_id = aws_security_group.endpoint_sg.id
   cidr_ipv4         = module.vpc.vpc_cidr_block
   from_port         = 443
   ip_protocol       = "tcp"
   to_port           = 443
+}
+
+resource "aws_vpc_endpoint_subnet_association" "sn_ec2" {
+  vpc_endpoint_id = aws_vpc_endpoint.ec2.id
+  subnet_id       = module.vpc.default_vpc_id
 }
