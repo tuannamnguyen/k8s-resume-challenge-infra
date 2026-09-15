@@ -4,13 +4,15 @@ resource "helm_release" "argocd" {
   repository = "https://argoproj.github.io/argo-helm"
   name       = "argocd"
 
-  values = yamlencode({
-    configs = {
-      params = {
-        server = {
-          insecure = true
+  values = [
+    yamlencode({
+      configs = {
+        params = {
+          server = {
+            insecure = true
+          }
         }
       }
-    }
-  })
+    })
+  ]
 }
