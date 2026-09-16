@@ -53,7 +53,12 @@ resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
 }
 
 resource "aws_vpc_endpoint_subnet_association" "sn_ec2" {
-  for_each = toset(module.vpc.private_subnets)
+  # Subnet IDs are unknown until the VPC module is applied.  Use their
+  # statically known tuple indexes as instance keys instead of the IDs.
+  for_each = {
+    for index, subnet_id in module.vpc.private_subnets :
+    "private-${index}" => subnet_id
+  }
 
   vpc_endpoint_id = aws_vpc_endpoint.ec2.id
   subnet_id       = each.value
