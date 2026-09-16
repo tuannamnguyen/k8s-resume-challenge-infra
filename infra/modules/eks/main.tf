@@ -39,8 +39,7 @@ module "eks" {
         admin = {
           policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
           access_scope = {
-            namespaces = ["*"]
-            type       = "cluster"
+            type = "cluster"
           }
         }
       }
@@ -48,6 +47,10 @@ module "eks" {
   }
 
   eks_managed_node_groups = {
+    iam_role_additional_policies = {
+      ssm = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+    }
+
     example = {
       min_size     = 1
       max_size     = 5
