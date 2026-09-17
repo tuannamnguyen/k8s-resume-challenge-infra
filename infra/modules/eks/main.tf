@@ -47,16 +47,16 @@ module "eks" {
   }
 
   eks_managed_node_groups = {
-    iam_role_additional_policies = {
-      ssm = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-    }
-
     example = {
       min_size     = 1
       max_size     = 5
       desired_size = 3
 
       instance_types = ["t3.small"]
+
+      iam_role_additional_policies = {
+        ssm = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+      }
     }
   }
 }
