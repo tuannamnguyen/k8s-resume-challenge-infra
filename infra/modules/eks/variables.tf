@@ -33,3 +33,8 @@ variable "create_argocd" {
   type        = bool
   default     = false
 }
+
+variable "caller_arn" {
+  description = "ARN associated with the calling entity."
+  type        = string
+}

@@ -20,6 +20,7 @@ module "eks" {
   private_subnet_ids = module.vpc.private_subnet_ids
   context            = module.label.context
   create_argocd      = true
+  caller_arn         = module.aws_context.caller_arn
 }
 
 
