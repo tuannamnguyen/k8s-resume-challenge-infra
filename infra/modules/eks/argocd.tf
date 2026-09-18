@@ -34,6 +34,11 @@ resource "helm_release" "argocd_apps" {
             repoURL        = "https://github.com/tuannamnguyen/k8s-resume-challenge-argocd.git"
             targetRevision = "HEAD"
             path           = "bootstrap"
+
+            helm = {
+              version      = "v3"
+              valuesObject = {}
+            }
           }
           destination = {
             server    = "https://kubernetes.default.svc"
