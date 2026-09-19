@@ -15,7 +15,9 @@ resource "helm_release" "argocd" {
           }
         }
         repositories = {
-          k8s-resume-challenge-argocd = "https://github.com/tuannamnguyen/k8s-resume-challenge-argocd"
+          k8s-resume-challenge-argocd = {
+            url = "https://github.com/tuannamnguyen/k8s-resume-challenge-argocd"
+          }
         }
         credentialTemplates = {
           https-creds = {
