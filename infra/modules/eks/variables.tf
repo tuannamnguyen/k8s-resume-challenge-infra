@@ -38,3 +38,13 @@ variable "caller_arn" {
   description = "ARN associated with the calling entity."
   type        = string
 }
+
+variable "github_password" {
+  description = "Github access token"
+  type        = string
+}
+
+variable "github_user" {
+  description = "Github username"
+  type        = string
+}

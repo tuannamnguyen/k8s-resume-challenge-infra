@@ -14,6 +14,16 @@ resource "helm_release" "argocd" {
             insecure = true
           }
         }
+        repositories = {
+          k8s-resume-challenge-argocd = "https://github.com/tuannamnguyen/k8s-resume-challenge-argocd"
+        }
+        credentialTemplates = {
+          https-creds = {
+            url      = "https://github.com/tuannamnguyen"
+            username = var.github_user
+            password = var.github_password
+          }
+        }
       }
     })
   ]
@@ -36,8 +46,10 @@ resource "helm_release" "argocd_apps" {
             path           = "bootstrap"
 
             helm = {
-              version      = "v3"
-              valuesObject = {}
+              version = "v3"
+              valuesObject = {
+                valuesFromTerraform = {}
+              }
             }
           }
           destination = {
