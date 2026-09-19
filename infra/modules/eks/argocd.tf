@@ -42,6 +42,7 @@ resource "helm_release" "argocd_apps" {
     yamlencode({
       applications = {
         bootstrap-app = {
+          project = "infra"
           source = {
             repoURL        = "https://github.com/tuannamnguyen/k8s-resume-challenge-argocd.git"
             targetRevision = "HEAD"
