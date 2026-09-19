@@ -47,7 +47,7 @@ resource "helm_release" "argocd_apps" {
           project = "default"
           source = {
             repoURL        = "https://github.com/tuannamnguyen/k8s-resume-challenge-argocd.git"
-            targetRevision = "HEAD"
+            targetRevision = "main"
             path           = "bootstrap"
 
             helm = {
