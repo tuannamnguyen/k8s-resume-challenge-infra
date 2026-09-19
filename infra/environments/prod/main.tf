@@ -21,6 +21,8 @@ module "eks" {
   context            = module.label.context
   create_argocd      = true
   caller_arn         = module.aws_context.caller_arn
+  github_password    = var.github_password
+  github_user        = var.github_user
 }
 
 

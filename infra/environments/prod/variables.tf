@@ -47,3 +47,13 @@ variable "tfc_aws_dynamic_credentials" {
     }))
   })
 }
+
+variable "github_password" {
+  description = "Github access token"
+  type        = string
+}
+
+variable "github_user" {
+  description = "Github username"
+  type        = string
+}
