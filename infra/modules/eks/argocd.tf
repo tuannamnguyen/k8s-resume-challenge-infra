@@ -54,7 +54,9 @@ resource "helm_release" "argocd_apps" {
               version = "v3"
               valuesObject = {
                 valuesFromTerraform = {
-                  vpcId = var.vpc_id
+                  aws-load-balancer-controller = {
+                    vpcId = var.vpc_id
+                  }
                 }
               }
             }
