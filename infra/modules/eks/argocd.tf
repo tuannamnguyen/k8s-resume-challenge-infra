@@ -54,7 +54,7 @@ resource "helm_release" "argocd_apps" {
               version = "v3"
               valuesObject = {
                 valuesFromTerraform = {
-                  vpc_id = var.vpc_id
+                  vpcId = var.vpc_id
                 }
               }
             }
