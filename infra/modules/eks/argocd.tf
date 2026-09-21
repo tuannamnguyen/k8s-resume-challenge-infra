@@ -53,7 +53,9 @@ resource "helm_release" "argocd_apps" {
             helm = {
               version = "v3"
               valuesObject = {
-                valuesFromTerraform = {}
+                valuesFromTerraform = {
+                  vpc_id = var.vpc_id
+                }
               }
             }
           }
