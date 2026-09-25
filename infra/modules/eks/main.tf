@@ -1,23 +1,15 @@
 module "eks" {
   source = "terraform-aws-modules/eks/aws"
 
-  name               = module.label.id
-  kubernetes_version = var.k8s_cluster_version
-
+  name = module.label.id
   tags = module.label.tags
 
-
-  # find a way to include AmazonEKSWorkerNodePolicy and AmazonEC2ContainerRegistryPullOnly
-  # https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html
-  compute_config = {
-    enabled = false
-  }
-
-  endpoint_public_access  = true
-  endpoint_private_access = true
-
+  kubernetes_version                       = var.k8s_cluster_version
+  vpc_id                                   = var.vpc_id
+  subnet_ids                               = var.private_subnet_ids
+  endpoint_public_access                   = true
+  endpoint_private_access                  = true
   enable_cluster_creator_admin_permissions = true
-
   addons = {
     coredns = {}
     eks-pod-identity-agent = {
@@ -29,8 +21,6 @@ module "eks" {
     }
   }
 
-  vpc_id     = var.vpc_id
-  subnet_ids = var.private_subnet_ids
 
   access_entries = {
     admin = {
