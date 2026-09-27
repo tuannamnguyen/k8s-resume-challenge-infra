@@ -55,7 +55,13 @@ resource "helm_release" "argocd_apps" {
               valuesObject = {
                 valuesFromTerraform = {
                   aws-load-balancer-controller = {
-                    vpcId = var.vpc_id
+                    vpcId       = var.vpc_id
+                    clusterName = module.eks.cluster_name
+                    region      = "ap-southeast-1"
+
+                    serviceAccount = {
+                      name = "aws-load-balancer-controller"
+                    }
                   }
                 }
               }
