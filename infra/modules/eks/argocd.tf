@@ -1,3 +1,9 @@
+resource "time_sleep" "wait_30_seconds" {
+  depends_on = [module.eks]
+
+  create_duration = "30s"
+}
+
 resource "helm_release" "argocd" {
   count            = var.create_argocd ? 1 : 0
   chart            = "argo-cd"
@@ -30,7 +36,7 @@ resource "helm_release" "argocd" {
     })
   ]
 
-  depends_on = [module.eks]
+  depends_on = [time_sleep.wait_30_seconds]
 }
 
 resource "helm_release" "argocd_apps" {
@@ -61,6 +67,13 @@ resource "helm_release" "argocd_apps" {
 
                     serviceAccount = {
                       name = "aws-load-balancer-controller"
+                    }
+                  }
+                  argo-cd = {
+                    ingress = {
+                      annotations = {
+
+                      }
                     }
                   }
                 }
