@@ -48,3 +48,8 @@ variable "github_user" {
   description = "Github username"
   type        = string
 }
+
+variable "certificate_arn" {
+  description = "ARN of ACM cert"
+  type        = string
+}

@@ -23,6 +23,7 @@ module "eks" {
   caller_arn         = module.aws_context.caller_arn
   github_password    = var.github_password
   github_user        = var.github_user
+  certificate_arn    = module.acm.acm_cert_arn
 }
 
 

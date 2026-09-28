@@ -72,7 +72,7 @@ resource "helm_release" "argocd_apps" {
                   argo-cd = {
                     ingress = {
                       annotations = {
-
+                        "alb.ingress.kubernetes.io/certificate-arn" = var.certificate_arn
                       }
                     }
                   }
