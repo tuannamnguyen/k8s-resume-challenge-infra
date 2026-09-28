@@ -34,6 +34,23 @@ resource "aws_vpc_endpoint" "ec2" {
   private_dns_enabled = true
 }
 
+resource "aws_vpc_endpoint" "ecr" {
+  tags = merge(module.label.tags, { Name = "${module.label.id}-ecr-endpoint" })
+
+  for_each = {
+    ecr_api_endpoint = "com.amazonaws.${var.region}.ecr.api",
+    ecr_dkr_endpoint = "com.amazonaws.${var.region}.ecr.dkr"
+  }
+
+
+  vpc_id             = module.vpc.vpc_id
+  service_name       = each.value
+  security_group_ids = [aws_security_group.endpoint_sg.id]
+  vpc_endpoint_type  = "Interface"
+
+  private_dns_enabled = true
+}
+
 resource "aws_vpc_endpoint" "ssm" {
   tags = merge(module.label.tags, { Name = "${module.label.id}-ssm-endpoint" })
 
@@ -82,6 +99,22 @@ resource "aws_vpc_endpoint_subnet_association" "sn_ec2" {
 
   vpc_endpoint_id = aws_vpc_endpoint.ec2.id
   subnet_id       = each.value
+}
+
+resource "aws_vpc_endpoint_subnet_association" "sn_ecr" {
+  # Associate every ECR interface endpoint with every private subnet. The ECR
+  # endpoint resource uses for_each, so each association must address one
+  # endpoint instance explicitly.
+  for_each = {
+    for pair in setproduct(keys(aws_vpc_endpoint.ecr), range(length(module.vpc.private_subnets))) :
+    "${pair[0]}-private-${pair[1]}" => {
+      vpc_endpoint_id = aws_vpc_endpoint.ecr[pair[0]].id
+      subnet_id       = module.vpc.private_subnets[pair[1]]
+    }
+  }
+
+  vpc_endpoint_id = each.value.vpc_endpoint_id
+  subnet_id       = each.value.subnet_id
 }
 
 resource "aws_vpc_endpoint_subnet_association" "sn_ssm" {
