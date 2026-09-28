@@ -8,8 +8,22 @@ terraform {
     }
 
     porkbun = {
-      source  = "kyswtn/porkbun"
-      version = "0.1.3"
+      source  = "jianyuan/porkbun"
+      version = "0.3.2"
+    }
+
+    helm = {
+      source  = "hashicorp/helm"
+      version = "3.3.0"
+    }
+  }
+
+  cloud {
+
+    organization = "nam_test_org"
+
+    workspaces {
+      name = "homelab-workspace"
     }
   }
 }

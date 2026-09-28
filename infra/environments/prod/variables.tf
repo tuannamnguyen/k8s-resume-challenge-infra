@@ -36,10 +36,29 @@ variable "create_route53_record_for_alb" {
   description = "Whether to create a Route53 record for the ALB"
 }
 
-variable "env_keys" {
-  type = string
+variable "tfc_aws_dynamic_credentials" {
+  description = "Object containing AWS dynamic credentials configuration"
+  type = object({
+    default = object({
+      shared_config_file = string
+    })
+    aliases = map(object({
+      shared_config_file = string
+    }))
+  })
 }
 
-variable "env_prod" {
-  type = string
+variable "github_password" {
+  description = "Github access token"
+  type        = string
+}
+
+variable "github_user" {
+  description = "Github username"
+  type        = string
+}
+
+variable "argocd_password" {
+  description = "Argocd admin password"
+  type        = string
 }
