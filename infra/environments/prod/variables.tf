@@ -57,3 +57,8 @@ variable "github_user" {
   description = "Github username"
   type        = string
 }
+
+variable "argocd_password" {
+  description = "Argocd admin password"
+  type        = string
+}

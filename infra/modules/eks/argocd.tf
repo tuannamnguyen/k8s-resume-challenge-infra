@@ -70,6 +70,11 @@ resource "helm_release" "argocd_apps" {
                     }
                   }
                   argo-cd = {
+                    configs = {
+                      secret = {
+                        argocdServerAdminPassword = bcrypt(var.argocd_password)
+                      }
+                    }
                     server = {
                       ingress = {
                         annotations = {

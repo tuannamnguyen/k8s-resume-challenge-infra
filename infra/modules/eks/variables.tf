@@ -53,3 +53,8 @@ variable "certificate_arn" {
   description = "ARN of ACM cert"
   type        = string
 }
+
+variable "argocd_password" {
+  description = "Argocd admin password"
+  type        = string
+}

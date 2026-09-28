@@ -24,6 +24,7 @@ module "eks" {
   github_password    = var.github_password
   github_user        = var.github_user
   certificate_arn    = module.acm.acm_cert_arn
+  argocd_password    = var.argocd_password
 }
 
 
