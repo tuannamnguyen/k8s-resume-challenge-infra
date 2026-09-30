@@ -19,6 +19,7 @@ module "eks" {
     vpc-cni = {
       before_compute = true
     }
+    aws-ebs-csi-driver = { most_recent = true }
   }
 
 
