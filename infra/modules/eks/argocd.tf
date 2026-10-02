@@ -72,7 +72,7 @@ resource "helm_release" "argocd_apps" {
                   argo-cd = {
                     configs = {
                       secret = {
-                        argocdServerAdminPassword = bcrypt(var.argocd_password)
+                        argocdServerAdminPassword = var.argocd_password
                       }
                     }
                     server = {
@@ -81,6 +81,11 @@ resource "helm_release" "argocd_apps" {
                           "alb.ingress.kubernetes.io/certificate-arn" = var.certificate_arn
                         }
                       }
+                    }
+                  }
+                  karpenter = {
+                    settings = {
+                      clusterName = module.eks.cluster_name
                     }
                   }
                 }
