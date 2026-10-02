@@ -43,7 +43,8 @@ module "eks" {
       max_size     = 5
       desired_size = 3
 
-      instance_types = ["t3.small"]
+      instance_types = ["t3.micro", "t3.small", "t3.medium"]
+      capacity_type  = "SPOT"
 
       iam_role_additional_policies = {
         ssm = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
