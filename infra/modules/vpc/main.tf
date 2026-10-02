@@ -26,11 +26,11 @@ resource "aws_vpc_endpoint" "ec2" {
   tags = merge(module.label.tags, { Name = "${module.label.id}-ec2-endpoint" })
 
 
-  vpc_id             = module.vpc.vpc_id
-  service_name       = "com.amazonaws.${var.region}.ec2"
-  security_group_ids = [aws_security_group.endpoint_sg.id]
-  vpc_endpoint_type  = "Interface"
-
+  vpc_id              = module.vpc.vpc_id
+  service_name        = "com.amazonaws.${var.region}.ec2"
+  security_group_ids  = [aws_security_group.endpoint_sg.id]
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.vpc.private_subnets
   private_dns_enabled = true
 }
 
@@ -43,11 +43,11 @@ resource "aws_vpc_endpoint" "ecr" {
   }
 
 
-  vpc_id             = module.vpc.vpc_id
-  service_name       = each.value
-  security_group_ids = [aws_security_group.endpoint_sg.id]
-  vpc_endpoint_type  = "Interface"
-
+  vpc_id              = module.vpc.vpc_id
+  service_name        = each.value
+  security_group_ids  = [aws_security_group.endpoint_sg.id]
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.vpc.private_subnets
   private_dns_enabled = true
 }
 
@@ -55,11 +55,11 @@ resource "aws_vpc_endpoint" "ssm" {
   tags = merge(module.label.tags, { Name = "${module.label.id}-ssm-endpoint" })
 
 
-  vpc_id             = module.vpc.vpc_id
-  service_name       = "com.amazonaws.${var.region}.ssm"
-  security_group_ids = [aws_security_group.endpoint_sg.id]
-  vpc_endpoint_type  = "Interface"
-
+  vpc_id              = module.vpc.vpc_id
+  service_name        = "com.amazonaws.${var.region}.ssm"
+  security_group_ids  = [aws_security_group.endpoint_sg.id]
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.vpc.private_subnets
   private_dns_enabled = true
 }
 
