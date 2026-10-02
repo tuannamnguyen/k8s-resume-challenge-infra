@@ -66,8 +66,10 @@ resource "aws_vpc_endpoint" "ssm" {
 resource "aws_vpc_endpoint" "s3" {
   tags = merge(module.label.tags, { Name = "${module.label.id}-s3-endpoint" })
 
-  vpc_id       = module.vpc.vpc_id
-  service_name = "com.amazonaws.${var.region}.s3"
+  vpc_id            = module.vpc.vpc_id
+  service_name      = "com.amazonaws.${var.region}.s3"
+  route_table_ids   = module.vpc.private_route_table_ids
+  vpc_endpoint_type = "Gateway"
 }
 
 resource "aws_security_group" "endpoint_sg" {
@@ -87,54 +89,4 @@ resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
   from_port         = 443
   ip_protocol       = "tcp"
   to_port           = 443
-}
-
-resource "aws_vpc_endpoint_subnet_association" "sn_ec2" {
-  # Subnet IDs are unknown until the VPC module is applied.  Use their
-  # statically known tuple indexes as instance keys instead of the IDs.
-  for_each = {
-    for index, subnet_id in module.vpc.private_subnets :
-    "private-${index}" => subnet_id
-  }
-
-  vpc_endpoint_id = aws_vpc_endpoint.ec2.id
-  subnet_id       = each.value
-}
-
-resource "aws_vpc_endpoint_subnet_association" "sn_ecr" {
-  # Associate every ECR interface endpoint with every private subnet. The ECR
-  # endpoint resource uses for_each, so each association must address one
-  # endpoint instance explicitly.
-  for_each = {
-    for pair in setproduct(keys(aws_vpc_endpoint.ecr), range(length(module.vpc.private_subnets))) :
-    "${pair[0]}-private-${pair[1]}" => {
-      vpc_endpoint_id = aws_vpc_endpoint.ecr[pair[0]].id
-      subnet_id       = module.vpc.private_subnets[pair[1]]
-    }
-  }
-
-  vpc_endpoint_id = each.value.vpc_endpoint_id
-  subnet_id       = each.value.subnet_id
-}
-
-resource "aws_vpc_endpoint_subnet_association" "sn_ssm" {
-  # Subnet IDs are unknown until the VPC module is applied.  Use their
-  # statically known tuple indexes as instance keys instead of the IDs.
-  for_each = {
-    for index, subnet_id in module.vpc.private_subnets :
-    "private-${index}" => subnet_id
-  }
-
-  vpc_endpoint_id = aws_vpc_endpoint.ssm.id
-  subnet_id       = each.value
-}
-
-resource "aws_vpc_endpoint_route_table_association" "rt_s3" {
-  for_each = {
-    for index, route_table_id in module.vpc.private_route_table_ids :
-    "route-table-${index}" => route_table_id
-  }
-
-  route_table_id  = each.value
-  vpc_endpoint_id = aws_vpc_endpoint.s3.id
 }
