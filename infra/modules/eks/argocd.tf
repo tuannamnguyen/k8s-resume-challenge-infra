@@ -85,7 +85,9 @@ resource "helm_release" "argocd_apps" {
                   }
                   karpenter = {
                     settings = {
-                      clusterName = module.eks.cluster_name
+                      clusterName     = module.eks.cluster_name
+                      clusterEndpoint = module.eks.cluster_endpoint
+                      eksControlPlane = true
                     }
                   }
                 }
