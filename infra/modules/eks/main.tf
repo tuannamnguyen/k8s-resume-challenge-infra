@@ -38,7 +38,7 @@ module "eks" {
   }
 
   eks_managed_node_groups = {
-    example = {
+    homelab = {
       min_size     = 1
       max_size     = 5
       desired_size = 3
