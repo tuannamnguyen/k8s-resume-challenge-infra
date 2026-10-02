@@ -49,6 +49,12 @@ module "eks" {
       iam_role_additional_policies = {
         ssm = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
       }
+
+      metadata_options = {
+        http_endpoint               = "enabled"
+        http_tokens                 = "required" # Enforces IMDSv2
+        http_put_response_hop_limit = 2          # Allows pods to access IMDS
+      }
     }
   }
 }

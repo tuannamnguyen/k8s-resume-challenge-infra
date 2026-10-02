@@ -34,19 +34,17 @@ module "aws_ebs_csi_pod_identity" {
   tags = module.label.tags
 }
 
-# module "external_secrets_pod_identity" {
-#   source = "terraform-aws-modules/eks-pod-identity/aws"
+module "karpenter_pod_identity" {
+  source = "terraform-aws-modules/eks-pod-identity/aws"
+  name   = "karpenter"
 
-#   name                                  = "external-secrets"
-#   attach_external_secrets_policy        = true
-#   external_secrets_secrets_manager_arns = [var.secret_arn]
+  associations = {
+    this = {
+      cluster_name    = var.cluster_name
+      namespace       = "kube-system"
+      service_account = "karpenter"
+    }
+  }
 
-#   associations = {
-#     this = {
-#       cluster_name    = var.cluster_name
-#       namespace       = "external-secrets"
-#       service_account = "external-secrets"
-#     }
-#   }
-
-# }
+  tags = module.label.tags
+}
