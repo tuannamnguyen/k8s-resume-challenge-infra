@@ -44,3 +44,7 @@ kubectl apply -f ./bootstrap/argocd/applications/external-secrets-operator.yaml
 helm template external-secret-config ./external-secret-config -f ./external-secret-config/values.yaml
 
 kubectl apply -f ./bootstrap/argocd/applications/external-secrets.yaml
+
+
+# argocd initial password
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
