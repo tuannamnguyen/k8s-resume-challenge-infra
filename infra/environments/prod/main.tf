@@ -48,6 +48,8 @@ module "iam" {
   source       = "../../modules/iam"
   cluster_name = module.eks.cluster_name
   context      = module.label.context
+  account_id   = module.aws_context.account_id
+  aws_region   = module.aws_context.region
 }
 
 # module "secrets_manager" {
