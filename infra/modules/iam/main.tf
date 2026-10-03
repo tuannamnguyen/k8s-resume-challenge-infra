@@ -38,6 +38,8 @@ module "karpenter_pod_identity" {
   source = "terraform-aws-modules/eks-pod-identity/aws"
   name   = "karpenter"
 
+  attach_custom_policy = true
+
   policy_statements = [
     {
       sid    = "AllowScopedEC2InstanceAccessActions"
