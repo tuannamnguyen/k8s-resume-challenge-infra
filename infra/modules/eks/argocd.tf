@@ -90,6 +90,8 @@ resource "helm_release" "argocd_apps" {
                       eksControlPlane = true
                     }
                   }
+
+                  karpenterNodeRole = module.eks.node_iam_role_name
                 }
               }
             }
