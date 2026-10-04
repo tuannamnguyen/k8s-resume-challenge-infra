@@ -7,3 +7,13 @@ module "label" {
   attributes = ["iam"]
   context    = var.context
 }
+
+module "eks_label" {
+  source  = "cloudposse/label/null"
+  version = "0.25.0"
+
+  # insert the 12 required variables here
+
+  attributes = ["cluster"]
+  context    = var.context
+}

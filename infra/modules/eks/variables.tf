@@ -58,3 +58,8 @@ variable "argocd_password" {
   description = "Argocd admin password"
   type        = string
 }
+
+variable "karpenter_node_role_name" {
+  description = "Karpenter IAM node role name"
+  type        = string
+}

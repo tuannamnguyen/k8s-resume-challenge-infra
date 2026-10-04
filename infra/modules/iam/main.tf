@@ -7,7 +7,7 @@ module "aws_lb_controller_pod_identity" {
 
   associations = {
     this = {
-      cluster_name    = var.cluster_name
+      cluster_name    = module.eks_label.id
       namespace       = "kube-system"
       service_account = "aws-load-balancer-controller"
     }
@@ -25,7 +25,7 @@ module "aws_ebs_csi_pod_identity" {
 
   associations = {
     this = {
-      cluster_name    = var.cluster_name
+      cluster_name    = module.eks_label.id
       namespace       = "kube-system"
       service_account = "ebs-csi-controller-sa"
     }
@@ -40,12 +40,12 @@ module "karpenter_pod_identity" {
 
   attach_custom_policy = false
   additional_policy_arns = {
-    for policy_name, policy in aws_iam_policy.karpenter : policy_name => policy.arn
+    for policy_name, policy in aws_iam_policy.karpenter_controller_policy : policy_name => policy.arn
   }
 
   associations = {
     this = {
-      cluster_name    = var.cluster_name
+      cluster_name    = module.eks_label.id
       namespace       = "kube-system"
       service_account = "karpenter"
     }
