@@ -13,6 +13,7 @@ module "vpc" {
 
   private_subnet_tags = {
     "kubernetes.io/role/internal-elb" = "1"
+    "karpenter.sh/discovery"          = module.eks_label.id
   }
 
   public_subnet_tags = {
