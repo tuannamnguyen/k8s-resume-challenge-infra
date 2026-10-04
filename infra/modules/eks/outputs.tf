@@ -18,3 +18,13 @@ output "auth_token" {
   description = "Authentication token to communicate with an EKS cluster"
   value       = data.aws_eks_cluster_auth.cluster_auth.token
 }
+
+output "node_iam_role_name" {
+  description = "EKS Auto node IAM role name"
+  value       = module.eks.node_iam_role_arn
+}
+
+output "node_iam_role_unique_id" {
+  description = "Stable and unique string identifying the IAM role"
+  value       = module.eks.node_iam_role_unique_id
+}
