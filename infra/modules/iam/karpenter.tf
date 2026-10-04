@@ -254,7 +254,7 @@ resource "aws_iam_policy" "karpenter_controller_policy" {
 }
 
 resource "aws_iam_role" "karpenter_node_role" {
-  name_prefix = "KarpenterNodeRole-${module.eks_label.id}"
+  name = "KarpenterNodeRole-${module.eks_label.id}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
