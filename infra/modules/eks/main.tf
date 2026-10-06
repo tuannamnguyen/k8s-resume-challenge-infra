@@ -41,7 +41,7 @@ module "eks" {
     homelab = {
       min_size     = 1
       max_size     = 8
-      desired_size = 5
+      desired_size = 6
 
       instance_types = ["t3.small", "t3.medium"]
       capacity_type  = "SPOT"
