@@ -281,3 +281,23 @@ resource "aws_iam_role_policy_attachment" "karpenter_node_role_policy" {
   role       = aws_iam_role.karpenter_node_role.name
   policy_arn = each.value
 }
+
+module "karpenter_pod_identity" {
+  source = "terraform-aws-modules/eks-pod-identity/aws"
+  name   = "karpenter"
+
+  attach_custom_policy = false
+  additional_policy_arns = {
+    for policy_name, policy in aws_iam_policy.karpenter_controller_policy : policy_name => policy.arn
+  }
+
+  associations = {
+    this = {
+      cluster_name    = module.eks_label.id
+      namespace       = "kube-system"
+      service_account = "karpenter"
+    }
+  }
+
+  tags = module.label.tags
+}

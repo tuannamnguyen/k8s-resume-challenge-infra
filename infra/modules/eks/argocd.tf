@@ -60,7 +60,7 @@ resource "helm_release" "argocd_apps" {
               version = "v3"
               valuesObject = {
                 valuesFromTerraform = {
-                  karpenterNodeRole = var.karpenter_node_role_name
+                  karpenterNodeRole = "KarpenterNodeRole-${module.eks.cluster_name}"
                   aws-load-balancer-controller = {
                     vpcId       = var.vpc_id
                     clusterName = module.eks.cluster_name

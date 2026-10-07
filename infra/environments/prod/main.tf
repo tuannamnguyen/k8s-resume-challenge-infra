@@ -15,17 +15,16 @@ module "vpc" {
 module "eks" {
   source = "../../modules/eks"
 
-  environment              = "prod"
-  vpc_id                   = module.vpc.vpc_id
-  private_subnet_ids       = module.vpc.private_subnet_ids
-  context                  = module.label.context
-  create_argocd            = true
-  caller_arn               = module.aws_context.caller_arn
-  github_password          = var.github_password
-  github_user              = var.github_user
-  certificate_arn          = module.acm.acm_cert_arn
-  argocd_password          = var.argocd_password
-  karpenter_node_role_name = module.iam.karpenter_node_role_name
+  environment        = "prod"
+  vpc_id             = module.vpc.vpc_id
+  private_subnet_ids = module.vpc.private_subnet_ids
+  context            = module.label.context
+  create_argocd      = true
+  caller_arn         = module.aws_context.caller_arn
+  github_password    = var.github_password
+  github_user        = var.github_user
+  certificate_arn    = module.acm.acm_cert_arn
+  argocd_password    = var.argocd_password
 }
 
 
