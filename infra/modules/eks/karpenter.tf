@@ -19,7 +19,7 @@ locals {
       resources = ["arn:aws:ec2:${var.aws_region}:*:launch-template/*"]
       actions   = ["ec2:RunInstances", "ec2:CreateFleet"]
       condition = [
-        { test = "StringEquals", variable = "aws:ResourceTag/kubernetes.io/cluster/${module.eks_label.id}", values = ["owned"] },
+        { test = "StringEquals", variable = "aws:ResourceTag/kubernetes.io/cluster/${module.label.id}", values = ["owned"] },
         { test = "StringLike", variable = "aws:ResourceTag/karpenter.sh/nodepool", values = ["*"] },
       ]
     },
@@ -36,8 +36,8 @@ locals {
       ]
       actions = ["ec2:RunInstances", "ec2:CreateFleet", "ec2:CreateLaunchTemplate"]
       condition = [
-        { test = "StringEquals", variable = "aws:RequestTag/kubernetes.io/cluster/${module.eks_label.id}", values = ["owned"] },
-        { test = "StringEquals", variable = "aws:RequestTag/eks:eks-cluster-name", values = [module.eks_label.id] },
+        { test = "StringEquals", variable = "aws:RequestTag/kubernetes.io/cluster/${module.label.id}", values = ["owned"] },
+        { test = "StringEquals", variable = "aws:RequestTag/eks:eks-cluster-name", values = [module.label.id] },
         { test = "StringLike", variable = "aws:RequestTag/karpenter.sh/nodepool", values = ["*"] },
       ]
     },
@@ -54,8 +54,8 @@ locals {
       ]
       actions = ["ec2:CreateTags"]
       condition = [
-        { test = "StringEquals", variable = "aws:RequestTag/kubernetes.io/cluster/${module.eks_label.id}", values = ["owned"] },
-        { test = "StringEquals", variable = "aws:RequestTag/eks:eks-cluster-name", values = [module.eks_label.id] },
+        { test = "StringEquals", variable = "aws:RequestTag/kubernetes.io/cluster/${module.label.id}", values = ["owned"] },
+        { test = "StringEquals", variable = "aws:RequestTag/eks:eks-cluster-name", values = [module.label.id] },
         { test = "StringEquals", variable = "ec2:CreateAction", values = ["RunInstances", "CreateFleet", "CreateLaunchTemplate"] },
         { test = "StringLike", variable = "aws:RequestTag/karpenter.sh/nodepool", values = ["*"] },
       ]
@@ -66,9 +66,9 @@ locals {
       resources = ["arn:aws:ec2:${var.aws_region}:*:instance/*"]
       actions   = ["ec2:CreateTags"]
       condition = [
-        { test = "StringEquals", variable = "aws:ResourceTag/kubernetes.io/cluster/${module.eks_label.id}", values = ["owned"] },
+        { test = "StringEquals", variable = "aws:ResourceTag/kubernetes.io/cluster/${module.label.id}", values = ["owned"] },
         { test = "StringLike", variable = "aws:ResourceTag/karpenter.sh/nodepool", values = ["*"] },
-        { test = "StringEqualsIfExists", variable = "aws:RequestTag/eks:eks-cluster-name", values = [module.eks_label.id] },
+        { test = "StringEqualsIfExists", variable = "aws:RequestTag/eks:eks-cluster-name", values = [module.label.id] },
         { test = "ForAllValues:StringEquals", variable = "aws:TagKeys", values = ["eks:eks-cluster-name", "karpenter.sh/nodeclaim", "Name"] },
       ]
     },
@@ -81,14 +81,14 @@ locals {
       ]
       actions = ["ec2:TerminateInstances", "ec2:DeleteLaunchTemplate"]
       condition = [
-        { test = "StringEquals", variable = "aws:ResourceTag/kubernetes.io/cluster/${module.eks_label.id}", values = ["owned"] },
+        { test = "StringEquals", variable = "aws:ResourceTag/kubernetes.io/cluster/${module.label.id}", values = ["owned"] },
         { test = "StringLike", variable = "aws:ResourceTag/karpenter.sh/nodepool", values = ["*"] },
       ]
     },
     {
       sid       = "AllowPassingInstanceRole"
       effect    = "Allow"
-      resources = ["arn:aws:iam::${var.account_id}:role/KarpenterNodeRole-${module.eks_label.id}"]
+      resources = ["arn:aws:iam::${var.account_id}:role/KarpenterNodeRole-${module.label.id}"]
       actions   = ["iam:PassRole"]
       condition = [{ test = "StringEquals", variable = "iam:PassedToService", values = ["ec2.amazonaws.com", "ec2.amazonaws.com.cn"] }]
     },
@@ -98,8 +98,8 @@ locals {
       resources = ["arn:aws:iam::${var.account_id}:instance-profile/*"]
       actions   = ["iam:CreateInstanceProfile"]
       condition = [
-        { test = "StringEquals", variable = "aws:RequestTag/kubernetes.io/cluster/${module.eks_label.id}", values = ["owned"] },
-        { test = "StringEquals", variable = "aws:RequestTag/eks:eks-cluster-name", values = [module.eks_label.id] },
+        { test = "StringEquals", variable = "aws:RequestTag/kubernetes.io/cluster/${module.label.id}", values = ["owned"] },
+        { test = "StringEquals", variable = "aws:RequestTag/eks:eks-cluster-name", values = [module.label.id] },
         { test = "StringEquals", variable = "aws:RequestTag/topology.kubernetes.io/region", values = [var.aws_region] },
         { test = "StringLike", variable = "aws:RequestTag/karpenter.k8s.aws/ec2nodeclass", values = ["*"] },
       ]
@@ -110,10 +110,10 @@ locals {
       resources = ["arn:aws:iam::${var.account_id}:instance-profile/*"]
       actions   = ["iam:TagInstanceProfile"]
       condition = [
-        { test = "StringEquals", variable = "aws:ResourceTag/kubernetes.io/cluster/${module.eks_label.id}", values = ["owned"] },
+        { test = "StringEquals", variable = "aws:ResourceTag/kubernetes.io/cluster/${module.label.id}", values = ["owned"] },
         { test = "StringEquals", variable = "aws:ResourceTag/topology.kubernetes.io/region", values = [var.aws_region] },
-        { test = "StringEquals", variable = "aws:RequestTag/kubernetes.io/cluster/${module.eks_label.id}", values = ["owned"] },
-        { test = "StringEquals", variable = "aws:RequestTag/eks:eks-cluster-name", values = [module.eks_label.id] },
+        { test = "StringEquals", variable = "aws:RequestTag/kubernetes.io/cluster/${module.label.id}", values = ["owned"] },
+        { test = "StringEquals", variable = "aws:RequestTag/eks:eks-cluster-name", values = [module.label.id] },
         { test = "StringEquals", variable = "aws:RequestTag/topology.kubernetes.io/region", values = [var.aws_region] },
         { test = "StringLike", variable = "aws:ResourceTag/karpenter.k8s.aws/ec2nodeclass", values = ["*"] },
         { test = "StringLike", variable = "aws:RequestTag/karpenter.k8s.aws/ec2nodeclass", values = ["*"] },
@@ -125,7 +125,7 @@ locals {
       resources = ["arn:aws:iam::${var.account_id}:instance-profile/*"]
       actions   = ["iam:AddRoleToInstanceProfile", "iam:RemoveRoleFromInstanceProfile", "iam:DeleteInstanceProfile"]
       condition = [
-        { test = "StringEquals", variable = "aws:ResourceTag/kubernetes.io/cluster/${module.eks_label.id}", values = ["owned"] },
+        { test = "StringEquals", variable = "aws:ResourceTag/kubernetes.io/cluster/${module.label.id}", values = ["owned"] },
         { test = "StringEquals", variable = "aws:ResourceTag/topology.kubernetes.io/region", values = [var.aws_region] },
         { test = "StringLike", variable = "aws:ResourceTag/karpenter.k8s.aws/ec2nodeclass", values = ["*"] },
       ]
@@ -133,13 +133,13 @@ locals {
     {
       sid       = "AllowAPIServerEndpointDiscovery"
       effect    = "Allow"
-      resources = ["arn:aws:eks:${var.aws_region}:${var.account_id}:cluster/${module.eks_label.id}"]
+      resources = ["arn:aws:eks:${var.aws_region}:${var.account_id}:cluster/${module.label.id}"]
       actions   = ["eks:DescribeCluster"]
     },
     {
       sid       = "AllowInterruptionQueueActions"
       effect    = "Allow"
-      resources = ["arn:aws:sqs:${var.aws_region}:${var.account_id}:${module.eks_label.id}"]
+      resources = ["arn:aws:sqs:${var.aws_region}:${var.account_id}:${module.label.id}"]
       actions   = ["sqs:DeleteMessage", "sqs:GetQueueUrl", "sqs:ReceiveMessage"]
     },
     {
@@ -147,7 +147,7 @@ locals {
       effect    = "Allow"
       resources = ["*"]
       actions   = ["arc-zonal-shift:GetManagedResource"]
-      condition = [{ test = "StringEquals", variable = "arc-zonal-shift:ResourceIdentifier", values = ["arn:aws:eks:${var.aws_region}:${var.account_id}:cluster/${module.eks_label.id}"] }]
+      condition = [{ test = "StringEquals", variable = "arc-zonal-shift:ResourceIdentifier", values = ["arn:aws:eks:${var.aws_region}:${var.account_id}:cluster/${module.label.id}"] }]
     },
     {
       sid       = "AllowRegionalReadActions"
@@ -248,13 +248,13 @@ data "aws_iam_policy_document" "karpenter" {
 resource "aws_iam_policy" "karpenter_controller_policy" {
   for_each = data.aws_iam_policy_document.karpenter
 
-  name   = "karpenter-${each.key}-${substr(md5(module.eks_label.id), 0, 12)}"
+  name   = "karpenter-${each.key}-${substr(md5(module.label.id), 0, 12)}"
   policy = each.value.json
   tags   = module.label.tags
 }
 
 resource "aws_iam_role" "karpenter_node_role" {
-  name = "KarpenterNodeRole-${module.eks_label.id}"
+  name = "KarpenterNodeRole-${module.label.id}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -293,7 +293,7 @@ module "karpenter_pod_identity" {
 
   associations = {
     this = {
-      cluster_name    = module.eks_label.id
+      cluster_name    = module.label.id
       namespace       = "kube-system"
       service_account = "karpenter"
     }

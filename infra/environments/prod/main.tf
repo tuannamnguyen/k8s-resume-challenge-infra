@@ -15,6 +15,9 @@ module "vpc" {
 module "eks" {
   source = "../../modules/eks"
 
+  aws_region = module.aws_context.region
+  account_id = module.aws_context.account_id
+
   environment        = "prod"
   vpc_id             = module.vpc.vpc_id
   private_subnet_ids = module.vpc.private_subnet_ids
@@ -45,12 +48,8 @@ module "acm" {
 }
 
 module "iam" {
-  source     = "../../modules/iam"
-  context    = module.label.context
-  account_id = module.aws_context.account_id
-  aws_region = module.aws_context.region
-
-  eks_cluster_name = module.eks.cluster_name
+  source  = "../../modules/iam"
+  context = module.label.context
 }
 
 module "porkbun" {
