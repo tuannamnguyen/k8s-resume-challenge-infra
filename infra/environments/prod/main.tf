@@ -49,6 +49,8 @@ module "iam" {
   context    = module.label.context
   account_id = module.aws_context.account_id
   aws_region = module.aws_context.region
+
+  eks_cluster_name = module.eks.cluster_name
 }
 
 module "porkbun" {

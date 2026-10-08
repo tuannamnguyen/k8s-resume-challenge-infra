@@ -58,3 +58,13 @@ variable "argocd_password" {
   description = "Argocd admin password"
   type        = string
 }
+
+variable "aws_region" {
+  description = "AWS region"
+  type        = string
+}
+
+variable "account_id" {
+  description = "AWS account id"
+  type        = string
+}
