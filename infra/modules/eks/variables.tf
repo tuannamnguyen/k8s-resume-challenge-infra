@@ -72,3 +72,7 @@ variable "account_id" {
 variable "grafana_admin_password" {
   type = string
 }
+
+variable "grafana_admin_user" {
+  type = string
+}

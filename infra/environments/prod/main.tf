@@ -29,6 +29,7 @@ module "eks" {
   certificate_arn        = module.acm.acm_cert_arn
   argocd_password        = var.argocd_password
   grafana_admin_password = var.grafana_admin_password
+  grafana_admin_user     = var.grafana_admin_user
 }
 
 
