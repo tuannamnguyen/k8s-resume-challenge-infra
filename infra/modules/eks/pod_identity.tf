@@ -7,7 +7,7 @@ module "aws_lb_controller_pod_identity" {
 
   associations = {
     this = {
-      cluster_name    = module.label.id
+      cluster_name    = module.eks.cluster_name
       namespace       = "kube-system"
       service_account = "aws-load-balancer-controller"
     }
@@ -25,7 +25,7 @@ module "aws_ebs_csi_pod_identity" {
 
   associations = {
     this = {
-      cluster_name    = module.label.id
+      cluster_name    = module.eks.cluster_name
       namespace       = "kube-system"
       service_account = "ebs-csi-controller-sa"
     }
