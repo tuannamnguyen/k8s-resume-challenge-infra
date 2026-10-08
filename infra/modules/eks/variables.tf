@@ -68,3 +68,7 @@ variable "account_id" {
   description = "AWS account id"
   type        = string
 }
+
+variable "grafana_admin_password" {
+  type = string
+}

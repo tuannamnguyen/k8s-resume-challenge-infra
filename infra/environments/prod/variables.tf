@@ -62,3 +62,8 @@ variable "argocd_password" {
   description = "Argocd admin password"
   type        = string
 }
+
+variable "grafana_admin_password" {
+  description = "Grafana admin password"
+  type        = string
+}

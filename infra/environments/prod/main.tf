@@ -18,16 +18,17 @@ module "eks" {
   aws_region = module.aws_context.region
   account_id = module.aws_context.account_id
 
-  environment        = "prod"
-  vpc_id             = module.vpc.vpc_id
-  private_subnet_ids = module.vpc.private_subnet_ids
-  context            = module.label.context
-  create_argocd      = true
-  caller_arn         = module.aws_context.caller_arn
-  github_password    = var.github_password
-  github_user        = var.github_user
-  certificate_arn    = module.acm.acm_cert_arn
-  argocd_password    = var.argocd_password
+  environment            = "prod"
+  vpc_id                 = module.vpc.vpc_id
+  private_subnet_ids     = module.vpc.private_subnet_ids
+  context                = module.label.context
+  create_argocd          = true
+  caller_arn             = module.aws_context.caller_arn
+  github_password        = var.github_password
+  github_user            = var.github_user
+  certificate_arn        = module.acm.acm_cert_arn
+  argocd_password        = var.argocd_password
+  grafana_admin_password = var.grafana_admin_password
 }
 
 
