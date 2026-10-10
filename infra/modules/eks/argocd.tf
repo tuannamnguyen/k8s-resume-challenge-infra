@@ -1,7 +1,7 @@
-resource "time_sleep" "wait_30_seconds" {
+resource "time_sleep" "wait_90_seconds" {
   depends_on = [module.eks]
 
-  create_duration = "30s"
+  create_duration = "90s"
 }
 
 resource "helm_release" "argocd" {
@@ -36,7 +36,7 @@ resource "helm_release" "argocd" {
     })
   ]
 
-  depends_on = [time_sleep.wait_30_seconds]
+  depends_on = [time_sleep.wait_90_seconds]
 }
 
 resource "helm_release" "argocd_apps" {
