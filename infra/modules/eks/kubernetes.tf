@@ -8,4 +8,6 @@ resource "kubernetes_secret_v1" "grafana_admin_password" {
     grafana_admin_user     = var.grafana_admin_user
     grafana_admin_password = var.grafana_admin_password
   }
+
+  depends_on = [module.eks]
 }
