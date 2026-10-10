@@ -55,6 +55,14 @@ module "eks" {
         http_tokens                 = "required" # Enforces IMDSv2
         http_put_response_hop_limit = 2          # Allows pods to access IMDS
       }
+
+      taints = {
+        infra = {
+          key    = "tier"
+          value  = "infra"
+          effect = "NO_SCHEDULE"
+        }
+      }
     }
   }
 
