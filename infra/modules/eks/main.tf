@@ -12,12 +12,14 @@ module "eks" {
   enable_cluster_creator_admin_permissions = true
   addons = {
     coredns = {
-      tolerations = {
-        key      = "tier"
-        value    = "infra"
-        effect   = "NoSchedule"
-        operator = "Equal"
-      }
+      configuration_values = jsonencode({
+        tolerations = {
+          key      = "tier"
+          value    = "infra"
+          effect   = "NoSchedule"
+          operator = "Equal"
+        }
+      })
     }
     eks-pod-identity-agent = {
       before_compute = true
@@ -28,12 +30,15 @@ module "eks" {
     }
     aws-ebs-csi-driver = {
       most_recent = true
-      tolerations = {
-        key      = "tier"
-        value    = "infra"
-        effect   = "NoSchedule"
-        operator = "Equal"
-      }
+      configuration_values = jsonencode({
+        tolerations = {
+          key      = "tier"
+          value    = "infra"
+          effect   = "NoSchedule"
+          operator = "Equal"
+        }
+      })
+
     }
   }
 
