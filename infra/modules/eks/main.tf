@@ -11,7 +11,14 @@ module "eks" {
   endpoint_private_access                  = true
   enable_cluster_creator_admin_permissions = true
   addons = {
-    coredns = {}
+    coredns = {
+      tolerations = {
+        key      = "tier"
+        value    = "infra"
+        effect   = "NoSchedule"
+        operator = "Equal"
+      }
+    }
     eks-pod-identity-agent = {
       before_compute = true
     }
@@ -19,7 +26,15 @@ module "eks" {
     vpc-cni = {
       before_compute = true
     }
-    aws-ebs-csi-driver = { most_recent = true }
+    aws-ebs-csi-driver = {
+      most_recent = true
+      tolerations = {
+        key      = "tier"
+        value    = "infra"
+        effect   = "NoSchedule"
+        operator = "Equal"
+      }
+    }
   }
 
 
