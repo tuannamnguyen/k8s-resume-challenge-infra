@@ -13,12 +13,14 @@ module "eks" {
   addons = {
     coredns = {
       configuration_values = jsonencode({
-        tolerations = {
-          key      = "tier"
-          value    = "infra"
-          effect   = "NoSchedule"
-          operator = "Equal"
-        }
+        tolerations = [
+          {
+            key      = "tier"
+            value    = "infra"
+            effect   = "NoSchedule"
+            operator = "Equal"
+          }
+        ]
       })
     }
     eks-pod-identity-agent = {
@@ -31,12 +33,14 @@ module "eks" {
     aws-ebs-csi-driver = {
       most_recent = true
       configuration_values = jsonencode({
-        tolerations = {
-          key      = "tier"
-          value    = "infra"
-          effect   = "NoSchedule"
-          operator = "Equal"
-        }
+        tolerations = [
+          {
+            key      = "tier"
+            value    = "infra"
+            effect   = "NoSchedule"
+            operator = "Equal"
+          }
+        ]
       })
 
     }
