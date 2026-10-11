@@ -40,7 +40,7 @@ resource "helm_release" "argocd" {
 
   depends_on = [
     kubernetes_namespace_v1.monitoring,
-    module.eks.module.eks.module.eks_managed_node_group["homelab"].aws_eks_node_group.this[0]
+    module.eks
   ]
 }
 
