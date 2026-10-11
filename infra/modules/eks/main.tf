@@ -36,17 +36,9 @@ module "eks" {
         node = {
           tolerations = [
             {
-              key      = "your-taint-key"
+              key      = "tier"
               operator = "Equal"
-              value    = "your-value"
-              effect   = "NoSchedule"
-            }
-          ]
-        }
-        controller = {
-          tolerations = [
-            {
-              operator = "Exists"
+              value    = "infra"
               effect   = "NoSchedule"
             }
           ]
