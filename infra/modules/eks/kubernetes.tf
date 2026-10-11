@@ -1,7 +1,7 @@
 resource "kubernetes_secret_v1" "grafana_admin_password" {
   metadata {
     name      = "grafana-admin-password"
-    namespace = "monitoring"
+    namespace = kubernetes_namespace_v1.monitoring.id
   }
 
   data = {
@@ -9,7 +9,7 @@ resource "kubernetes_secret_v1" "grafana_admin_password" {
     grafana_admin_password = var.grafana_admin_password
   }
 
-  depends_on = [helm_release.argocd_apps, kubernetes_namespace_v1.monitoring]
+  depends_on = [helm_release.argocd_apps]
 }
 
 resource "kubernetes_namespace_v1" "monitoring" {
