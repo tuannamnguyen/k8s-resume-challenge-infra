@@ -14,6 +14,14 @@ resource "helm_release" "argocd" {
 
   values = [
     yamlencode({
+      global = {
+        tolerations = {
+          key      = "tier"
+          operator = "Equal"
+          value    = "infra"
+          effect   = "NoSchedule"
+        }
+      }
       configs = {
         params = {
           server = {
