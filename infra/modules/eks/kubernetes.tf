@@ -8,8 +8,6 @@ resource "kubernetes_secret_v1" "grafana_admin_password" {
     grafana_admin_user     = var.grafana_admin_user
     grafana_admin_password = var.grafana_admin_password
   }
-
-  depends_on = [helm_release.argocd_apps]
 }
 
 resource "kubernetes_namespace_v1" "monitoring" {
