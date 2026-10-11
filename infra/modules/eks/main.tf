@@ -33,7 +33,7 @@ module "eks" {
     aws-ebs-csi-driver = {
       most_recent = true
       configuration_values = jsonencode({
-        node = {
+        controller = {
           tolerations = [
             {
               key      = "tier"
