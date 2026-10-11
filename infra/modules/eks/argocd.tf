@@ -1,9 +1,3 @@
-resource "time_sleep" "wait_90_seconds" {
-  depends_on = [module.eks]
-
-  create_duration = "90s"
-}
-
 resource "helm_release" "argocd" {
   count            = var.create_argocd ? 1 : 0
   chart            = "argo-cd"
@@ -44,7 +38,10 @@ resource "helm_release" "argocd" {
     })
   ]
 
-  depends_on = [time_sleep.wait_90_seconds]
+  depends_on = [
+    kubernetes_namespace_v1.monitoring,
+    module.eks.module.eks_managed_node_group["homelab"]
+  ]
 }
 
 resource "helm_release" "argocd_apps" {
