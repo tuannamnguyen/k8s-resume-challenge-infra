@@ -49,7 +49,7 @@ module "external_secrets_pod_identity" {
     this = {
       cluster_name    = module.eks.cluster_name
       namespace       = "kube-system"
-      service_account = "ebs-csi-controller-sa"
+      service_account = "external-secrets-operator"
     }
   }
 
