@@ -1,8 +1,10 @@
 module "secrets_manager" {
   source = "terraform-aws-modules/secrets-manager/aws"
 
-  name_prefix             = var.project_name
+  name_prefix             = module.label.id
   recovery_window_in_days = 0
+
+  tags = module.label.tags
 
   create_policy       = true
   block_public_policy = true
@@ -19,7 +21,7 @@ module "secrets_manager" {
   }
 
   secret_string = jsonencode({
-    env_keys = var.env_keys
-    env_prod = var.env_prod
+    DB_USER = var.DB_USER
+    DB_PASS = var.DB_PASS
   })
 }

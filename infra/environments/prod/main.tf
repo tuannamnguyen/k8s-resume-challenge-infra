@@ -74,3 +74,13 @@ module "label" {
     Terraform = true
   }
 }
+
+module "secret_manager" {
+  source  = "../../modules/secret_manager"
+  context = module.label.context
+
+  account_id = module.aws_context.account_id
+
+  DB_PASS = var.DB_PASS
+  DB_USER = var.DB_USER
+}

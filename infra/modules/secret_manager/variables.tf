@@ -1,15 +1,17 @@
-variable "project_name" {
-  type = string
-}
-
 variable "account_id" {
   type = string
 }
-
-variable "env_keys" {
-  type = string
+variable "DB_USER" {
+  type    = string
+  default = ""
 }
 
-variable "env_prod" {
-  type = string
+variable "DB_PASS" {
+  type    = string
+  default = ""
+}
+
+variable "context" {
+  description = "Single object for setting entire context at once"
+  type        = any
 }

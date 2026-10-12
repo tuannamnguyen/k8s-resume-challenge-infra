@@ -72,3 +72,11 @@ variable "grafana_admin_user" {
   description = "Grafana admin user"
   type        = string
 }
+
+variable "DB_PASS" {
+  type = string
+}
+
+variable "DB_USER" {
+  type = string
+}
