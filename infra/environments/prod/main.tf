@@ -30,6 +30,7 @@ module "eks" {
   argocd_password        = var.argocd_password
   grafana_admin_password = var.grafana_admin_password
   grafana_admin_user     = var.grafana_admin_user
+  db_secret_arn          = module.secret_manager.db_secret_arn
 }
 
 

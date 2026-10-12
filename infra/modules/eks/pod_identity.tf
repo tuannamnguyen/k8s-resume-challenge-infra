@@ -39,11 +39,9 @@ module "external_secrets_pod_identity" {
 
   name = "external-secrets"
 
-  attach_external_secrets_policy = true
-  # external_secrets_ssm_parameter_arns   = ["arn:aws:ssm:*:*:parameter/foo"]
-  # external_secrets_secrets_manager_arns = ["arn:aws:secretsmanager:*:*:secret:bar"]
-  # external_secrets_kms_key_arns         = ["arn:aws:kms:*:*:key/1234abcd-12ab-34cd-56ef-1234567890ab"]
-  external_secrets_create_permission = true
+  attach_external_secrets_policy        = true
+  external_secrets_secrets_manager_arns = [var.db_secret_arn]
+  external_secrets_create_permission    = true
 
   associations = {
     this = {

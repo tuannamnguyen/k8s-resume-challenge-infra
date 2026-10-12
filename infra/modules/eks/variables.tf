@@ -76,3 +76,7 @@ variable "grafana_admin_password" {
 variable "grafana_admin_user" {
   type = string
 }
+
+variable "db_secret_arn" {
+  type = any
+}

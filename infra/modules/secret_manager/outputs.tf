@@ -1,4 +1,4 @@
-output "secret_arn" {
+output "db_secret_arn" {
   description = "ARN of the secret"
-  value       = module.secrets_manager.secret_arn
+  value       = module.db_secrets.secret_arn
 }

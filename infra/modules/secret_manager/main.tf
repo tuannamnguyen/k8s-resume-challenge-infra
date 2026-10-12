@@ -1,4 +1,4 @@
-module "secrets_manager" {
+module "db_secrets" {
   source = "terraform-aws-modules/secrets-manager/aws"
 
   name_prefix             = module.label.id
