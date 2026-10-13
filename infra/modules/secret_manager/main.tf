@@ -1,7 +1,7 @@
 module "db_secrets" {
   source = "terraform-aws-modules/secrets-manager/aws"
 
-  name                    = module.label.id
+  name                    = "${module.label.id}-db-creds"
   recovery_window_in_days = 0
 
   tags = module.label.tags
